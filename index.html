@@ -16,7 +16,7 @@
             font-family: Arial, sans-serif;
             font-size: 12px;
             color: #b1b1be;
-            /* UPDATED BACKGROUND: Reduced opacity to make it much brighter, with a silvery-purple tint */
+            /* FIXED BACKGROUND: Purple-tinted silver/grey overlay matching the look of image_00d5da.jpg */
             background: linear-gradient(rgba(145, 145, 175, 0.22), rgba(20, 20, 35, 0.45)), 
                         url('https://i.etsystatic.com/7478392/r/il/11a0be/4541531062/il_fullxfull.4541531062_k58m.jpg') no-repeat center center fixed;
             background-size: cover;
@@ -31,9 +31,53 @@
             top: 0; left: 0; bottom: 0; right: 0;
             background: linear-gradient(rgba(10, 10, 15, 0) 40%, rgba(0, 0, 0, 0.42) 50%), 
                         linear-gradient(90deg, rgba(150, 120, 255, 0.04), rgba(0, 255, 0, 0.01), rgba(100, 100, 255, 0.04));
-            z-index: 9999;
+            z-index: 9998; /* Set below lightbox layer so expanded image stays on top */
             background-size: 100% 4px, 6px 100%;
             pointer-events: none;
+        }
+
+        /* --- LIGHTBOX CLICK OVERLAY & ANIMATION --- */
+        .lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+            opacity: 0;
+            transition: background-color 0.4s ease, opacity 0.4s ease;
+        }
+
+        .lightbox img {
+            width: 0vw; /* Hidden size default to prepare for pop out zoom */
+            max-height: 80vh;
+            object-fit: contain;
+            border: 2px solid #9cb1e6;
+            box-shadow: 0 0 40px rgba(0,0,0,0.9);
+            transition: width 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.15); /* Snappy expand spring effect */
+        }
+
+        /* Active click state via hash target anchor */
+        .lightbox:target {
+            opacity: 1;
+            pointer-events: auto;
+            background: rgba(5, 5, 10, 0.88); /* Fades background out darker */
+        }
+
+        .lightbox:target img {
+            width: 33.33vw; /* Covers exactly 1/3 of screen width */
+        }
+
+        .lightbox-close {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            cursor: default;
         }
 
         /* --- MAIN CONTAINER --- */
@@ -85,7 +129,6 @@
         }
 
         .box-header {
-            /* Silvery/purple gradient for the header panels */
             background: linear-gradient(to bottom, #34344a, #181826);
             padding: 7px 10px;
             font-weight: bold;
@@ -106,8 +149,9 @@
         }
 
         .profile-pic {
-            width: 170px;
-            height: 220px;
+            /* FIXED: Set dimensions to a true square profile format */
+            width: 170px !important;
+            height: 170px !important;
             object-fit: cover;
             border: 1px solid #44445c;
             filter: grayscale(100%) contrast(135%) brightness(95%);
@@ -165,30 +209,78 @@
             margin-top: 8px;
         }
 
-        /* Gallery Grid */
+        /* --- SON & GALLERY INTERACTIVE POPPING EFFECTS --- */
+        .son-link, .gallery-grid a {
+            display: inline-block;
+            overflow: hidden;
+            transition: border-color 0.2s;
+        }
+        
+        .son-link { 
+            border: 1px solid #ff0000; 
+            width: 100px; 
+            height: 100px; 
+        }
+        
+        .gallery-grid a { 
+            display: block; 
+            border: 1px solid #323244; 
+        }
+
+        .son-link img, .gallery-grid a img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(20%) contrast(115%);
+            transition: transform 0.2s ease;
+            display: block;
+        }
+
+        /* Adds subtle card pull-forward scale when browsing items */
+        .son-link:hover img, .gallery-grid a:hover img {
+            transform: scale(1.05);
+        }
+
+        .gallery-grid a:hover {
+            border-color: #9cb1e6;
+        }
+
+        /* Gallery Grid Setup */
         .gallery-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 10px;
             padding: 12px;
         }
-
-        .gallery-grid img {
-            width: 100%;
-            height: 90px;
-            object-fit: cover;
-            border: 1px solid #323244;
-            filter: grayscale(20%) contrast(115%);
-            transition: transform 0.2s;
-        }
-
-        .gallery-grid img:hover {
-            transform: scale(1.05);
-            border-color: #9cb1e6;
-        }
     </style>
 </head>
 <body>
+
+    <div id="img-son" class="lightbox">
+        <a href="#close" class="lightbox-close"></a>
+        <img src="images/image_2026-05-13_220516722.png" alt="Alan">
+    </div>
+
+    <div id="img-gal1" class="lightbox">
+        <a href="#close" class="lightbox-close"></a>
+        <img src="images/white-aesthetic-sky-with-birds-e26askfub6g889bl.jpg" alt="Gallery 1">
+    </div>
+
+    <div id="img-gal2" class="lightbox">
+        <a href="#close" class="lightbox-close"></a>
+        <img src="images/a2754188671_10.jpg" alt="Gallery 2">
+    </div>
+
+    <div id="img-gal3" class="lightbox">
+        <a href="#close" class="lightbox-close"></a>
+        <img src="images/Screenshot 2026-05-10 230025.png" alt="Gallery 3">
+    </div>
+
+    <div id="img-gal4" class="lightbox">
+        <a href="#close" class="lightbox-close"></a>
+        <img src="images/image_2026-05-13_225215117.png" alt="Gallery 4">
+    </div>
+
 
     <div class="container">
         
@@ -270,7 +362,9 @@
             <div class="box">
                 <div class="box-header">my son &lt;3</div>
                 <div style="padding: 15px; display: flex; gap: 15px; align-items: center;">
-                    <img src="images/image_2026-05-13_220516722.png" style="width: 100px; height: 100px; border: 1px solid #ff0000; object-fit: cover;" alt="Alan">
+                    <a href="#img-son" class="son-link">
+                        <img src="images/image_2026-05-13_220516722.png" alt="Alan">
+                    </a>
                     
                     <div class="bestie-info">
                         <h4 style="color: #ff0000; margin: 0 0 5px 0; font-size: 14px; font-weight: bold;">Alan!!</h4>
@@ -284,10 +378,18 @@
             <div class="box">
                 <div class="box-header">the gallery</div>
                 <div class="gallery-grid">
-                    <img src="images/white-aesthetic-sky-with-birds-e26askfub6g889bl.jpg" alt="Gallery Image 1">
-                    <img src="images/a2754188671_10.jpg" alt="Gallery Image 2">
-                    <img src="images/Screenshot 2026-05-10 230025.png" alt="Gallery Image 3">
-                    <img src="images/image_2026-05-13_225215117.png" alt="Gallery Image 4">
+                    <a href="#img-gal1">
+                        <img src="images/white-aesthetic-sky-with-birds-e26askfub6g889bl.jpg" alt="Gallery Image 1">
+                    </a>
+                    <a href="#img-gal2">
+                        <img src="images/a2754188671_10.jpg" alt="Gallery Image 2">
+                    </a>
+                    <a href="#img-gal3">
+                        <img src="images/Screenshot 2026-05-10 230025.png" alt="Gallery Image 3">
+                    </a>
+                    <a href="#img-gal4">
+                        <img src="images/image_2026-05-13_225215117.png" alt="Gallery Image 4">
+                    </a>
                 </div>
             </div>
 
