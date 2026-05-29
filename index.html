@@ -35,7 +35,7 @@
             pointer-events: none;
         }
 
-        /* --- LIGHTBOX OVERLAY EFFECT (CLEAN & SEPARATED) --- */
+        /* --- LIGHTBOX OVERLAY EFFECT --- */
         .lightbox {
             position: fixed;
             top: 0;
@@ -52,7 +52,6 @@
             transition: background-color 0.4s ease, opacity 0.4s ease;
         }
 
-        /* This controls the large pop-out image properties ONLY */
         .lightbox .expanded-img {
             width: 0vw; 
             height: auto;
@@ -67,10 +66,9 @@
         .lightbox:target {
             opacity: 1;
             pointer-events: auto;
-            background: rgba(5, 5, 10, 0.92); /* Darkens background overlay cleanly */
+            background: rgba(5, 5, 10, 0.92);
         }
 
-        /* Smoothly scale up to exactly 1/3 of the screen width without stretching */
         .lightbox:target .expanded-img {
             width: 33.33vw;
             height: auto;
@@ -225,13 +223,26 @@
             display: block; 
             overflow: hidden;
             border: 1px solid #323244; 
-            height: 90px;
+            background: rgba(10, 10, 15, 0.4);
+            width: 100%;
+            height: auto; /* Removed explicit height restriction */
         }
 
-        .son-link img, .gallery-grid a img {
+        .son-link img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            filter: grayscale(20%) contrast(115%);
+            transition: transform 0.2s ease;
+            display: block;
+        }
+
+        /* FIXED: Set to scale-down and auto height to maintain genuine image dimensions */
+        .gallery-grid a img {
+            width: 100%;
+            height: auto;
+            max-height: 120px;
+            object-fit: scale-down;
             filter: grayscale(20%) contrast(115%);
             transition: transform 0.2s ease;
             display: block;
@@ -245,9 +256,11 @@
             border-color: #9cb1e6;
         }
 
+        /* Gallery Grid Setup */
         .gallery-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
+            align-items: center; /* Aligns thumbnails nicely if they have different vertical heights */
             gap: 10px;
             padding: 12px;
         }
