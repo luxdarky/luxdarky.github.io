@@ -16,23 +16,25 @@
             font-family: Arial, sans-serif;
             font-size: 12px;
             color: #b1b1be;
-            /* Updated background: Winter trees pattern with the template's dark blue tint overlay */
-            background: linear-gradient(rgba(10, 14, 23, 0.75), rgba(10, 14, 23, 0.75)), 
-                        url('https://i.etsystatic.com/7478392/r/il/11a0be/4541531062/il_fullxfull.4541531062_k58m.jpg') no-repeat center center fixed;
+            
+            /* FIXED BACKGROUND: Uses a bright purple-tinted silver/grey overlay to mimic image_00d5da.jpg */
+            background: linear-gradient(rgba(145, 145, 175, 0.22), rgba(20, 20, 35, 0.45)), 
+                        url('https://gratisography.com/photo/black-white-trees-winter/') no-repeat center center fixed;
             background-size: cover;
             position: relative;
         }
 
-        /* --- STICKY SCANLINE OVERLAY --- */
+        /* --- STICKY HIGH-CONTRAST SCANLINE OVERLAY --- */
         body::before {
             content: " ";
             display: block;
             position: fixed;
             top: 0; left: 0; bottom: 0; right: 0;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.35) 50%), 
-                        linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+            /* Stronger horizontal lines balancing the brighter background */
+            background: linear-gradient(rgba(10, 10, 15, 0) 40%, rgba(0, 0, 0, 0.42) 50%), 
+                        linear-gradient(90deg, rgba(150, 120, 255, 0.04), rgba(0, 255, 0, 0.01), rgba(100, 100, 255, 0.04));
             z-index: 9999;
-            background-size: 100% 5px, 6px 100%;
+            background-size: 100% 4px, 6px 100%;
             pointer-events: none;
         }
 
@@ -40,13 +42,14 @@
         .container {
             max-width: 950px;
             margin: 0 auto;
-            background-color: rgba(13, 13, 19, 0.82);
-            border: 1px solid #2d2d3b;
+            /* Slightly more translucent backplate so the bright background shows through your content lanes */
+            background-color: rgba(11, 11, 16, 0.86);
+            border: 1px solid #36364a;
             padding: 20px;
             display: grid;
             grid-template-columns: 310px 1fr;
             gap: 25px;
-            box-shadow: 0 0 30px rgba(0, 0, 0, 0.9);
+            box-shadow: 0 0 35px rgba(0, 0, 0, 0.85);
         }
 
         /* --- TYPOGRAPHY & LINKS --- */
@@ -64,11 +67,11 @@
             text-align: center;
             margin-bottom: 15px;
             letter-spacing: 1px;
-            text-shadow: 0 0 5px rgba(255,255,255,0.2);
+            text-shadow: 0 0 6px rgba(200, 200, 255, 0.4);
         }
 
         a {
-            color: #8fa0cc;
+            color: #9cb1e6;
             text-decoration: none;
         }
 
@@ -78,18 +81,19 @@
 
         /* --- BOXES (TABLES/PANELS) --- */
         .box {
-            border: 1px solid #2d2d3b;
+            border: 1px solid #323244;
             margin-bottom: 20px;
-            background: rgba(18, 18, 26, 0.7);
+            background: rgba(16, 16, 24, 0.75);
             overflow: hidden;
         }
 
         .box-header {
-            background: linear-gradient(to bottom, #2b2b3a, #151520);
+            /* Purple/Silver gradient headers matched to target scheme */
+            background: linear-gradient(to bottom, #34344a, #181826);
             padding: 7px 10px;
             font-weight: bold;
-            color: #ffffff;
-            border-bottom: 1px solid #2d2d3b;
+            color: #e2e2ff;
+            border-bottom: 1px solid #323244;
             font-size: 12px;
         }
 
@@ -108,8 +112,9 @@
             width: 170px;
             height: 220px;
             object-fit: cover;
-            border: 1px solid #3d3d4e;
-            filter: grayscale(100%) contrast(140%) brightness(90%);
+            border: 1px solid #44445c;
+            /* High contrast, slight purple/blue cooling filter for user portrait */
+            filter: grayscale(100%) contrast(135%) brightness(95%);
             display: inline-block;
         }
 
@@ -118,6 +123,7 @@
             margin: 8px 0;
             font-size: 11px;
             line-height: 1.5;
+            color: #cbd2eb;
         }
 
         /* --- TWO-COLUMN STYLED TABLES (INTERESTS) --- */
@@ -134,7 +140,7 @@
 
         .info-table .label {
             width: 85px;
-            background: rgba(30, 30, 42, 0.6);
+            background: rgba(40, 40, 58, 0.5);
             color: #dde2ff;
             font-weight: normal;
         }
@@ -159,7 +165,7 @@
 
         .music-player audio {
             width: 100%;
-            filter: invert(0.9) hue-rotate(180deg);
+            filter: invert(0.88) hue-rotate(190deg) brightness(1.05);
             margin-top: 8px;
         }
 
@@ -175,14 +181,14 @@
             width: 100%;
             height: 90px;
             object-fit: cover;
-            border: 1px solid #2d2d3b;
-            filter: grayscale(30%) contrast(110%);
+            border: 1px solid #323244;
+            filter: grayscale(20%) contrast(115%);
             transition: transform 0.2s;
         }
 
         .gallery-grid img:hover {
             transform: scale(1.05);
-            border-color: #8fa0cc;
+            border-color: #9cb1e6;
         }
     </style>
 </head>
@@ -205,100 +211,4 @@
                 <div class="box-header">Contacting luxdarky</div>
                 <div class="box-content">
                     <p style="margin: 0; line-height: 1.5;">
-                        Add me on my socials or say hello! You can check my profile out directly on <a href="https://discord.com/users/939252688456155177" target="_blank">Discord</a> or send me a friend request over on <a href="https://www.roblox.com/users/1499630738/profile" target="_blank">Roblox</a>!
-                    </p>
-                </div>
-            </div>
-
-            <div class="box">
-                <div class="box-header">kool stuffz</div>
-                <table class="info-table">
-                    <tr>
-                        <td class="label">General</td>
-                        <td>Hi guyz, My names Finn, but please just call me Token. I'm 16 years old and currently being homeschooled, so ill probably answer fast over my socials. I use he/they pronouns, but i dont care about which ones u use. sadly chronically online. 0_o</td>
-                    </tr>
-                    <tr>
-                        <td class="label">Music</td>
-                        <td>I listen to a lot of MCR, Pierce The Veil, Mindless Self Indulgence and Stomach Book, but it mostly depends on my mood. I also listen to FEM&M, RomancePlanet, Lil Texas and Slipknot. >w&lt;</td>
-                    </tr>
-                    <tr>
-                        <td class="label">Shows</td>
-                        <td>I usually only watch The Rookie, Dr House, The Good Doctor and Black Mirror, i also LOVE JJBA and JJK c:</td>
-                    </tr>
-                    <tr>
-                        <td class="label">Movies</td>
-                        <td>My Favourite Movies are 28 years later (1 and 2), Smile (also 1 and 2), and all MIB parts. ^^</td>
-                    </tr>
-                    <tr>
-                        <td class="label">Discord</td>
-                        <td><a href="https://discord.com/users/939252688456155177" target="_blank">luxdarky</a></td>
-                    </tr>
-                    <tr>
-                        <td class="label">Roblox</td>
-                        <td><a href="https://www.roblox.com/users/1499630738/profile" target="_blank">@luxdarky</a></td>
-                    </tr>
-                </table>
-            </div>
-        </div>
-
-        <div class="right-col">
-            
-            <div class="box">
-                <div class="box-header">now playing...</div>
-                <div class="music-player">
-                    <div style="font-size: 13px; margin-bottom: 5px; color: #ffffff; font-weight: bold;">CHALICE OF MIND - Yabujin</div>
-                    <audio controls>
-                        <source src="music.mp3" type="audio/mpeg">
-                        Your browser does not support the audio element.
-                    </audio>
-                </div>
-            </div>
-
-            <div class="box">
-                <div class="box-header">about me!!</div>
-                <div class="box-content blurb-section">
-                    <h3>Bio:</h3>
-                    <p style="margin-top: 4px; margin-bottom: 12px;">Welcome to my profile. I'm building this on GitHub because i don't have a spacehey invite yet. ;-;</p>
-                    
-                    <h3>Who I'd like to meet:</h3>
-                    <p style="margin-top: 4px; margin-bottom: 0;">Anyone who likes TF2, Ready or Not and Roblox! XvX</p>
-                </div>
-            </div>
-
-            <div class="box">
-                <div class="box-header">my son &lt;3</div>
-                <div style="padding: 15px; display: flex; gap: 15px; align-items: center;">
-                    <img src="images/image_2026-05-13_220516722.png" style="width: 100px; height: 100px; border: 1px solid #3d3d4e; object-fit: cover;" alt="Alan">
-                    
-                    <div class="bestie-info">
-                        <h4 style="color: #ffffff; margin: 0 0 5px 0; font-size: 14px; font-weight: bold;">Alan!!</h4>
-                        <p style="margin: 0; font-size: 12px; line-height: 1.4; color: #b1b1be;">
-                            This is my son! (not really) We've known each other since June of 2025 (probably even longer) and he is basically the only person who gets my music and movie taste. :P
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="box">
-                <div class="box-header">the gallery</div>
-                <div class="gallery-grid">
-                    <img src="images/white-aesthetic-sky-with-birds-e26askfub6g889bl.jpg" alt="Gallery Image 1">
-                    <img src="images/a2754188671_10.jpg" alt="Gallery Image 2">
-                    <img src="images/Screenshot 2026-05-10 230025.png" alt="Gallery Image 3">
-                    <img src="images/image_2026-05-13_225215117.png" alt="Gallery Image 4">
-                </div>
-            </div>
-
-            <div class="box">
-                <div class="box-header">commentz</div>
-                <div class="box-content" style="text-align: center; color: #666677; font-style: italic; padding: 15px;">
-                    Still working on implementing this, please be patient! ❤️
-                </div>
-            </div>
-
-        </div>
-
-    </div>
-
-</body>
-</html>
+                        Add me on my socials or say hello! You can check my profile out directly on <a href="
