@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>luxdarky</title>
+    <style>
+        /* --- RESET & BASIC STYLES --- */
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            margin: 0;
+            padding: 40px 20px;
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+            color: #b1b1be;
+            /* Dark forest background overlayed with a dark tint */
+            background: linear-gradient(rgba(10, 14, 23, 0.75), rgba(10, 14, 23, 0.75)), 
+                        url('https://images.unsplash.com/photo-1502082553048-f009c37129b9?q=80&w=1500') no-repeat center center fixed;
+            background-size: cover;
+            position: relative;
+        }
+
+        /* --- STICKY SCANLINE OVERLAY --- */
+        body::before {
+            content: " ";
+            display: block;
+            position: fixed;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.35) 50%), 
+                        linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+            z-index: 9999;
+            background-size: 100% 5px, 6px 100%;
+            pointer-events: none;
+        }
+
+        /* --- MAIN CONTAINER --- */
+        .container {
+            max-width: 950px;
+            margin: 0 auto;
+            background-color: rgba(13, 13, 19, 0.82);
+            border: 1px solid #2d2d3b;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: 310px 1fr;
+            gap: 25px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.9);
+        }
+
+        /* --- TYPOGRAPHY & LINKS --- */
+        h1, h2, h3 {
+            margin: 0 0 8px 0;
+            font-weight: normal;
+        }
+
+        .profile-name {
+            font-family: Georgia, serif;
+            font-size: 26px;
+            font-style: italic;
+            font-weight: bold;
+            color: #ffffff;
+            text-align: center;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+            text-shadow: 0 0 5px rgba(255,255,255,0.2);
+        }
+
+        a {
+            color: #8fa0cc;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* --- BOXES (TABLES/PANELS) --- */
+        .box {
+            border: 1px solid #2d2d3b;
+            margin-bottom: 20px;
+            background: rgba(18, 18, 26, 0.7);
+        }
+
+        .box-header {
+            background: linear-gradient(to bottom, #2b2b3a, #151520);
+            padding: 7px 10px;
+            font-weight: bold;
+            color: #ffffff;
+            border-bottom: 1px solid #2d2d3b;
+            font-size: 12px;
+        }
+
+        .box-content {
+            padding: 12px;
+            line-height: 1.4;
+        }
+
+        /* --- LEFT COLUMN UTILITIES --- */
+        .profile-pic-container {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .profile-pic {
+            width: 170px;
+            height: 220px;
+            object-fit: cover;
+            border: 1px solid #3d3d4e;
+            filter: grayscale(100%) contrast(140%) brightness(90%);
+            display: inline-block;
+        }
+
+        .status-text {
+            text-align: center;
+            margin: 8px 0;
+            font-size: 11px;
+        }
+
+        /* --- TWO-COLUMN STYLED TABLES (INTERESTS) --- */
+        .info-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .info-table td {
+            padding: 8px;
+            border: 1px solid #2d2d3b;
+            vertical-align: top;
+        }
+
+        .info-table .label {
+            width: 85px;
+            background: rgba(30, 30, 42, 0.6);
+            color: #dde2ff;
+            font-weight: normal;
+        }
+
+        .blurb-section h3 {
+            font-size: 12px;
+            color: #ffffff;
+            margin-top: 15px;
+            margin-bottom: 3px;
+            text-transform: uppercase;
+        }
+        .blurb-section h3:first-child {
+            margin-top: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <div class="left-col">
+            <div class="profile-name">luxdarky</div>
+            
+            <div class="profile-pic-container">
+                <img class="profile-pic" src="https://via.placeholder.com/170x220/222/aaa?text=[Manga+Image]" alt="luxdarky">
+                <div class="status-text">
+                    <div>"rotting from inside"</div>
+                    <div>2003's kid, single</div>
+                    <div style="margin-top: 10px; color: #00ff00; font-weight: bold;">online!</div>
+                </div>
+            </div>
+
+            <div class="box">
+                <div class="box-header">Contacting luxdarky</div>
+                <div class="box-content">
+                    <p style="margin: 0; line-height: 1.5;">
+                        Feel free to drop a message or follow my updates! You can find me over on my <a href="https://instagram.com/yourusername" target="_blank">Instagram</a>, or check out my tracks directly on <a href="https://soundcloud.com/yourusername" target="_blank">SoundCloud</a>. For anything else, shoot an email over to <a href="mailto:your-email@example.com">here</a>.
+                    </p>
+                </div>
+            </div>
+
+            <div class="box">
+                <div class="box-header">luxdarky's Interests</div>
+                <table class="info-table">
+                    <tr>
+                        <td class="label">General</td>
+                        <td>[Image/Icon Placement]</td>
+                    </tr>
+                    <tr>
+                        <td class="label">Music</td>
+                        <td>artemas, hard techno</td>
+                    </tr>
+                    <tr>
+                        <td class="label">Movies</td>
+                        <td>horror and anything weird</td>
+                    </tr>
+                    <tr>
+                        <td class="label">Television</td>
+                        <td>ghost hunting show, paranormal</td>
+                    </tr>
+                    <tr>
+                        <td class="label">Books</td>
+                        <td>i hate books, just by researching i'm barely survive.</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="right-col">
+            
+            <div class="box">
+                <div class="box-header">luxdarky's Latest Blog Entries [View Blog]</div>
+                <div class="box-content">
+                    <span style="font-style: italic; color: #666677;">there are no blog entries yet.</span>
+                </div>
+            </div>
+
+            <div class="box">
+                <div class="box-header">luxdarky's Blurbs</div>
+                <div class="box-content blurb-section">
+                    <h3>About me:</h3>
+                    <p>call me "dahlia", berlin, de - bangkok, th.</p>
+                    
+                    <h3>Who I'd like to meet:</h3>
+                    <p>maybe some new friend, who could share something in commons.</p>
+                </div>
+            </div>
+
+            <div class="box">
+                <div class="box-header">my son &lt;3</div>
+                <div style="padding: 15px; display: flex; gap: 15px; align-items: center;">
+                    <img src="images/image_2026-05-13_220516722.png" style="width: 100px; height: 100px; border: 2px solid #ff0000; object-fit: cover;" alt="Alan">
+                    
+                    <div class="bestie-info">
+                        <h4 style="color: #ff0000; margin: 0 0 5px 0; font-size: 14px; font-weight: bold;">Alan!!</h4>
+                        <p style="margin: 0; font-size: 12px; line-height: 1.4;">
+                            This is my son! (not really) We've known each other since June of 2025 (probably even longer) and he is basically the only person who gets my music and movie taste. :P
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="box">
+                <div class="box-header">luxdarky's Friends Comments</div>
+                <div class="box-content">
+                    <strong>displaying 0 of 0 comments ( <a href="#">view all</a> | <a href="#">add comment</a> )</strong>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+</html>
