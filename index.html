@@ -16,9 +16,9 @@
             font-family: Arial, sans-serif;
             font-size: 12px;
             color: #b1b1be;
-            /* Dark forest background overlayed with a dark tint */
+            /* Style background preserved: Dark forest base with a dark tint overlay */
             background: linear-gradient(rgba(10, 14, 23, 0.75), rgba(10, 14, 23, 0.75)), 
-                        url('https://images.unsplash.com/photo-1502082553048-f009c37129b9?q=80&w=1500') no-repeat center center fixed;
+                        url('https://gratisography.com/photo/black-white-trees-winter/') no-repeat center center fixed;
             background-size: cover;
             position: relative;
         }
@@ -50,8 +50,8 @@
         }
 
         /* --- TYPOGRAPHY & LINKS --- */
-        h1, h2, h3 {
-            margin: 0 0 8px 0;
+        h1, h2, h3, h4 {
+            margin: 0;
             font-weight: normal;
         }
 
@@ -81,6 +81,7 @@
             border: 1px solid #2d2d3b;
             margin-bottom: 20px;
             background: rgba(18, 18, 26, 0.7);
+            overflow: hidden;
         }
 
         .box-header {
@@ -116,12 +117,14 @@
             text-align: center;
             margin: 8px 0;
             font-size: 11px;
+            line-height: 1.5;
         }
 
         /* --- TWO-COLUMN STYLED TABLES (INTERESTS) --- */
         .info-table {
             width: 100%;
             border-collapse: collapse;
+            font-size: 12px;
         }
 
         .info-table td {
@@ -137,15 +140,49 @@
             font-weight: normal;
         }
 
-        .blurb-section h3 {
+        /* --- RIGHT COLUMN BLURBS & PLUGINS --- */
+        .blurb-section h4 {
             font-size: 12px;
             color: #ffffff;
-            margin-top: 15px;
+            margin-top: 12px;
             margin-bottom: 3px;
             text-transform: uppercase;
+            font-weight: bold;
         }
-        .blurb-section h3:first-child {
+        .blurb-section h4:first-child {
             margin-top: 0;
+        }
+
+        .music-player {
+            padding: 12px;
+            text-align: center;
+        }
+
+        .music-player audio {
+            width: 100%;
+            filter: invert(0.9) hue-rotate(180deg);
+            margin-top: 8px;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            padding: 12px;
+        }
+
+        .gallery-grid img {
+            width: 100%;
+            height: 90px;
+            object-fit: cover;
+            border: 1px solid #2d2d3b;
+            filter: grayscale(30%) contrast(110%);
+            transition: transform 0.2s;
+        }
+
+        .gallery-grid img:hover {
+            transform: scale(1.05);
+            border-color: #8fa0cc;
         }
     </style>
 </head>
@@ -157,11 +194,10 @@
             <div class="profile-name">luxdarky</div>
             
             <div class="profile-pic-container">
-                <img class="profile-pic" src="https://via.placeholder.com/170x220/222/aaa?text=[Manga+Image]" alt="luxdarky">
+                <img class="profile-pic" src="images/me.jpg" alt="luxdarky">
                 <div class="status-text">
-                    <div>"rotting from inside"</div>
-                    <div>2003's kid, single</div>
-                    <div style="margin-top: 10px; color: #00ff00; font-weight: bold;">online!</div>
+                    <div>Currently: Watching the Clouds :p</div>
+                    <div style="margin-top: 10px; color: #00ff00; font-weight: bold;">● ONLINE/AFK</div>
                 </div>
             </div>
 
@@ -169,82 +205,4 @@
                 <div class="box-header">Contacting luxdarky</div>
                 <div class="box-content">
                     <p style="margin: 0; line-height: 1.5;">
-                        Feel free to drop a message or follow my updates! You can find me over on my <a href="https://instagram.com/yourusername" target="_blank">Instagram</a>, or check out my tracks directly on <a href="https://soundcloud.com/yourusername" target="_blank">SoundCloud</a>. For anything else, shoot an email over to <a href="mailto:your-email@example.com">here</a>.
-                    </p>
-                </div>
-            </div>
-
-            <div class="box">
-                <div class="box-header">luxdarky's Interests</div>
-                <table class="info-table">
-                    <tr>
-                        <td class="label">General</td>
-                        <td>[Image/Icon Placement]</td>
-                    </tr>
-                    <tr>
-                        <td class="label">Music</td>
-                        <td>artemas, hard techno</td>
-                    </tr>
-                    <tr>
-                        <td class="label">Movies</td>
-                        <td>horror and anything weird</td>
-                    </tr>
-                    <tr>
-                        <td class="label">Television</td>
-                        <td>ghost hunting show, paranormal</td>
-                    </tr>
-                    <tr>
-                        <td class="label">Books</td>
-                        <td>i hate books, just by researching i'm barely survive.</td>
-                    </tr>
-                </table>
-            </div>
-        </div>
-
-        <div class="right-col">
-            
-            <div class="box">
-                <div class="box-header">luxdarky's Latest Blog Entries [View Blog]</div>
-                <div class="box-content">
-                    <span style="font-style: italic; color: #666677;">there are no blog entries yet.</span>
-                </div>
-            </div>
-
-            <div class="box">
-                <div class="box-header">luxdarky's Blurbs</div>
-                <div class="box-content blurb-section">
-                    <h3>About me:</h3>
-                    <p>call me "dahlia", berlin, de - bangkok, th.</p>
-                    
-                    <h3>Who I'd like to meet:</h3>
-                    <p>maybe some new friend, who could share something in commons.</p>
-                </div>
-            </div>
-
-            <div class="box">
-                <div class="box-header">my son &lt;3</div>
-                <div style="padding: 15px; display: flex; gap: 15px; align-items: center;">
-                    <img src="images/image_2026-05-13_220516722.png" style="width: 100px; height: 100px; border: 2px solid #ff0000; object-fit: cover;" alt="Alan">
-                    
-                    <div class="bestie-info">
-                        <h4 style="color: #ff0000; margin: 0 0 5px 0; font-size: 14px; font-weight: bold;">Alan!!</h4>
-                        <p style="margin: 0; font-size: 12px; line-height: 1.4;">
-                            This is my son! (not really) We've known each other since June of 2025 (probably even longer) and he is basically the only person who gets my music and movie taste. :P
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="box">
-                <div class="box-header">luxdarky's Friends Comments</div>
-                <div class="box-content">
-                    <strong>displaying 0 of 0 comments ( <a href="#">view all</a> | <a href="#">add comment</a> )</strong>
-                </div>
-            </div>
-
-        </div>
-
-    </div>
-
-</body>
-</html>
+                        Add me on my socials or say hello! You can check my profile out directly on <a href="https://discord.com/users/939252688456155177" target="_blank">Discord</a> or send me a friend request over on <a
