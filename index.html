@@ -12,7 +12,7 @@
         
         body {
             margin: 0;
-            padding: 40px 20px;
+            padding: 40px 20px 100px 20px; /* Bottom padding so content doesn't get cut off by the fixed music pod */
             font-family: Arial, sans-serif;
             font-size: 12px;
             color: #b1b1be;
@@ -74,7 +74,7 @@
             cursor: default;
         }
 
-        /* NEW STATE: Triggers the overlay strictly when the hidden box is checked */
+        /* Triggers the overlay strictly when the hidden box is checked */
         .lightbox-toggle:checked + .lightbox {
             opacity: 1;
             pointer-events: auto;
@@ -84,6 +84,70 @@
         .lightbox-toggle:checked + .lightbox .expanded-img {
             width: 33.33vw;
             height: auto;
+        }
+
+        /* --- STICKY BACKGROUND MUSIC CORNER CONTROLLER --- */
+        .music-pod {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(14, 14, 22, 0.95);
+            border: 1px solid #44445c;
+            padding: 10px 15px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.85);
+            z-index: 9999;
+        }
+
+        .music-pod-title {
+            font-size: 10px;
+            color: #9cb1e6;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            max-width: 110px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .music-btn {
+            background: #252538;
+            border: 1px solid #44445c;
+            color: #dde2ff;
+            padding: 4px 10px;
+            font-size: 10px;
+            cursor: pointer;
+            font-family: monospace;
+            text-transform: uppercase;
+            transition: background 0.2s;
+        }
+
+        .music-btn:hover {
+            background: #363654;
+            color: #ffffff;
+        }
+
+        .volume-slider {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 70px;
+            height: 4px;
+            background: #252538;
+            border: 1px solid #44445c;
+            outline: none;
+        }
+
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 10px;
+            height: 12px;
+            background: #9cb1e6;
+            cursor: pointer;
+            border: 1px solid #14141f;
         }
 
         /* --- MAIN CONTAINER --- */
@@ -202,18 +266,6 @@
             margin-top: 0;
         }
 
-        /* Music Player */
-        .music-player {
-            padding: 12px;
-            text-align: center;
-        }
-
-        .music-player audio {
-            width: 100%;
-            filter: invert(0.88) hue-rotate(190deg) brightness(1.05);
-            margin-top: 8px;
-        }
-
         /* --- THUMBNAIL LAYOUT STYLES --- */
         .son-label { 
             display: inline-block;
@@ -244,6 +296,7 @@
             display: block;
         }
 
+        /* Maintains realistic proportions while sizing down the files */
         .gallery-grid label img {
             width: 100%;
             height: auto;
@@ -273,6 +326,16 @@
     </style>
 </head>
 <body>
+
+    <audio id="bg-track" loop>
+        <source src="music.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="music-pod">
+        <div class="music-pod-title">Chalice Of Mind</div>
+        <button id="play-toggle-btn" class="music-btn">Play</button>
+        <input id="vol-control" class="volume-slider" type="range" min="0" max="1" step="0.05" value="0.4">
+    </div>
 
     <input type="checkbox" id="pop-son" class="lightbox-toggle">
     <div class="lightbox">
@@ -362,12 +425,9 @@
             
             <div class="box">
                 <div class="box-header">now playing...</div>
-                <div class="music-player">
-                    <div style="font-size: 13px; margin-bottom: 5px; color: #ffffff; font-weight: bold;">CHALICE OF MIND - Yabujin</div>
-                    <audio controls>
-                        <source src="music.mp3" type="audio/mpeg">
-                        Your browser does not support the audio element.
-                    </audio>
+                <div class="box-content" style="text-align: center; padding: 16px;">
+                    <div style="font-size: 13px; color: #ffffff; font-weight: bold; letter-spacing: 0.5px;">CHALICE OF MIND - Yabujin</div>
+                    <div style="font-size: 10px; color: #66667d; margin-top: 4px;">Track is currently streaming in background context. Controller pinned below.</div>
                 </div>
             </div>
 
@@ -427,5 +487,27 @@
 
     </div>
 
+    <script>
+        const audioTrack = document.getElementById('bg-track');
+        const playToggleBtn = document.getElementById('play-toggle-btn');
+        const volControl = document.getElementById('vol-control');
+
+        // Establish default starting volume level (40% capacity)
+        audioTrack.volume = volControl.value;
+
+        playToggleBtn.addEventListener('click', () => {
+            if (audioTrack.paused) {
+                audioTrack.play();
+                playToggleBtn.textContent = 'Pause';
+            } else {
+                audioTrack.pause();
+                playToggleBtn.textContent = 'Play';
+            }
+        });
+
+        volControl.addEventListener('input', (e) => {
+            audioTrack.volume = e.target.value;
+        });
+    </script>
 </body>
 </html>
