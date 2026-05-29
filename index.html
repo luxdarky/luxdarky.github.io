@@ -327,13 +327,13 @@
 </head>
 <body>
 
-    <audio id="bg-track" loop>
+    <audio id="bg-track" autoplay loop>
         <source src="music.mp3" type="audio/mpeg">
     </audio>
 
     <div class="music-pod">
         <div class="music-pod-title">Chalice Of Mind</div>
-        <button id="play-toggle-btn" class="music-btn">Play</button>
+        <button id="play-toggle-btn" class="music-btn">Pause</button>
         <input id="vol-control" class="volume-slider" type="range" min="0" max="1" step="0.05" value="0.4">
     </div>
 
@@ -426,7 +426,7 @@
             <div class="box">
                 <div class="box-header">now playing...</div>
                 <div class="box-content" style="text-align: center; padding: 16px;">
-                    <div style="font-size: 13px; color: #ffffff; font-weight: bold; letter-spacing: 0.5px;">for her - whatsaheart</div>
+                    <div style="font-size: 13px; color: #ffffff; font-weight: bold; letter-spacing: 0.5px;">for you - whatsaheart</div>
                     <div style="font-size: 10px; color: #66667d; margin-top: 4px;">Track is currently streaming in background context. Controller pinned below.</div>
                 </div>
             </div>
@@ -495,19 +495,33 @@
         // Establish default starting volume level (40% capacity)
         audioTrack.volume = volControl.value;
 
+        // Sync visual button state in case autoplay fails due to strict browser safety permissions
+        audioTrack.addEventListener('play', () => {
+            playToggleBtn.textContent = 'Pause';
+        });
+        audioTrack.addEventListener('pause', () => {
+            playToggleBtn.textContent = 'Play';
+        });
+
         playToggleBtn.addEventListener('click', () => {
             if (audioTrack.paused) {
                 audioTrack.play();
-                playToggleBtn.textContent = 'Pause';
             } else {
                 audioTrack.pause();
-                playToggleBtn.textContent = 'Play';
             }
         });
 
         volControl.addEventListener('input', (e) => {
             audioTrack.volume = e.target.value;
         });
+
+        // SAFETY NET: Attempts autoplay immediately upon user's very first click on the document 
+        // if the browser initially blocks native autoplay background requests.
+        document.addEventListener('click', () => {
+            if (audioTrack.paused) {
+                audioTrack.play().catch(err => console.log("Autoplay blocked waiting for deeper interaction:", err));
+            }
+        }, { once: true }); // Fires only once to avoid messing up manual pauses later!
     </script>
 </body>
 </html>
