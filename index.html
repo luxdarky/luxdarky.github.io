@@ -16,7 +16,6 @@
             font-family: Arial, sans-serif;
             font-size: 12px;
             color: #b1b1be;
-            /* FIXED BACKGROUND: Purple-tinted silver/grey overlay matching the look of image_00d5da.jpg */
             background: linear-gradient(rgba(145, 145, 175, 0.22), rgba(20, 20, 35, 0.45)), 
                         url('https://i.etsystatic.com/7478392/r/il/11a0be/4541531062/il_fullxfull.4541531062_k58m.jpg') no-repeat center center fixed;
             background-size: cover;
@@ -31,7 +30,7 @@
             top: 0; left: 0; bottom: 0; right: 0;
             background: linear-gradient(rgba(10, 10, 15, 0) 40%, rgba(0, 0, 0, 0.42) 50%), 
                         linear-gradient(90deg, rgba(150, 120, 255, 0.04), rgba(0, 255, 0, 0.01), rgba(100, 100, 255, 0.04));
-            z-index: 9998; /* Set below lightbox layer so expanded image stays on top */
+            z-index: 9998;
             background-size: 100% 4px, 6px 100%;
             pointer-events: none;
         }
@@ -54,12 +53,13 @@
         }
 
         .lightbox img {
-            width: 0vw; /* Hidden size default to prepare for pop out zoom */
+            width: 0vw !important; /* Forced reset initialization */
+            height: auto !important; /* Prevents the vertical stretching squish */
             max-height: 80vh;
-            object-fit: contain;
+            object-fit: contain !important;
             border: 2px solid #9cb1e6;
             box-shadow: 0 0 40px rgba(0,0,0,0.9);
-            transition: width 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.15); /* Snappy expand spring effect */
+            transition: width 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.15);
         }
 
         /* Active click state via hash target anchor */
@@ -69,8 +69,10 @@
             background: rgba(5, 5, 10, 0.88); /* Fades background out darker */
         }
 
+        /* OVERRIDE INLINE DIMS: This forces it to scale outwards dynamically */
         .lightbox:target img {
-            width: 33.33vw; /* Covers exactly 1/3 of screen width */
+            width: 33.33vw !important; 
+            height: auto !important;
         }
 
         .lightbox-close {
@@ -149,7 +151,6 @@
         }
 
         .profile-pic {
-            /* FIXED: Set dimensions to a true square profile format */
             width: 170px !important;
             height: 170px !important;
             object-fit: cover;
@@ -228,15 +229,14 @@
         }
 
         .son-link img, .gallery-grid a img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: cover !important;
             filter: grayscale(20%) contrast(115%);
             transition: transform 0.2s ease;
             display: block;
         }
 
-        /* Adds subtle card pull-forward scale when browsing items */
         .son-link:hover img, .gallery-grid a:hover img {
             transform: scale(1.05);
         }
