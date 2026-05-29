@@ -35,7 +35,11 @@
             pointer-events: none;
         }
 
-        /* --- LIGHTBOX OVERLAY EFFECT --- */
+        /* --- NO-URL LIGHTBOX CONTROLS --- */
+        .lightbox-toggle {
+            display: none; /* Keeps the technical checkboxes fully hidden */
+        }
+
         .lightbox {
             position: fixed;
             top: 0;
@@ -62,23 +66,24 @@
             transition: width 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.15);
         }
 
-        /* Active click state */
-        .lightbox:target {
-            opacity: 1;
-            pointer-events: auto;
-            background: rgba(5, 5, 10, 0.92);
-        }
-
-        .lightbox:target .expanded-img {
-            width: 33.33vw;
-            height: auto;
-        }
-
+        /* This handles closing when clicking the background tint */
         .lightbox-close {
             position: absolute;
             width: 100%;
             height: 100%;
             cursor: default;
+        }
+
+        /* NEW STATE: Triggers the overlay strictly when the hidden box is checked */
+        .lightbox-toggle:checked + .lightbox {
+            opacity: 1;
+            pointer-events: auto;
+            background: rgba(5, 5, 10, 0.92);
+        }
+
+        .lightbox-toggle:checked + .lightbox .expanded-img {
+            width: 33.33vw;
+            height: auto;
         }
 
         /* --- MAIN CONTAINER --- */
@@ -210,25 +215,27 @@
         }
 
         /* --- THUMBNAIL LAYOUT STYLES --- */
-        .son-link { 
+        .son-label { 
             display: inline-block;
             overflow: hidden;
             border: 1px solid #ff0000; 
             width: 100px; 
             height: 100px; 
             flex-shrink: 0;
+            cursor: pointer;
         }
         
-        .gallery-grid a { 
+        .gallery-grid label { 
             display: block; 
             overflow: hidden;
             border: 1px solid #323244; 
             background: rgba(10, 10, 15, 0.4);
             width: 100%;
-            height: auto; /* Removed explicit height restriction */
+            height: auto;
+            cursor: pointer;
         }
 
-        .son-link img {
+        .son-label img {
             width: 100%;
             height: 100%;
             object-fit: cover;
@@ -237,8 +244,7 @@
             display: block;
         }
 
-        /* FIXED: Set to scale-down and auto height to maintain genuine image dimensions */
-        .gallery-grid a img {
+        .gallery-grid label img {
             width: 100%;
             height: auto;
             max-height: 120px;
@@ -248,11 +254,11 @@
             display: block;
         }
 
-        .son-link:hover img, .gallery-grid a:hover img {
+        .son-label:hover img, .gallery-grid label:hover img {
             transform: scale(1.05);
         }
 
-        .gallery-grid a:hover {
+        .gallery-grid label:hover {
             border-color: #9cb1e6;
         }
 
@@ -260,7 +266,7 @@
         .gallery-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            align-items: center; /* Aligns thumbnails nicely if they have different vertical heights */
+            align-items: center;
             gap: 10px;
             padding: 12px;
         }
@@ -268,28 +274,33 @@
 </head>
 <body>
 
-    <div id="img-son" class="lightbox">
-        <a href="#close" class="lightbox-close"></a>
+    <input type="checkbox" id="pop-son" class="lightbox-toggle">
+    <div class="lightbox">
+        <label for="pop-son" class="lightbox-close"></label>
         <img class="expanded-img" src="images/image_2026-05-13_220516722.png" alt="Alan">
     </div>
 
-    <div id="img-gal1" class="lightbox">
-        <a href="#close" class="lightbox-close"></a>
+    <input type="checkbox" id="pop-gal1" class="lightbox-toggle">
+    <div class="lightbox">
+        <label for="pop-gal1" class="lightbox-close"></label>
         <img class="expanded-img" src="images/white-aesthetic-sky-with-birds-e26askfub6g889bl.jpg" alt="Gallery 1">
     </div>
 
-    <div id="img-gal2" class="lightbox">
-        <a href="#close" class="lightbox-close"></a>
+    <input type="checkbox" id="pop-gal2" class="lightbox-toggle">
+    <div class="lightbox">
+        <label for="pop-gal2" class="lightbox-close"></label>
         <img class="expanded-img" src="images/a2754188671_10.jpg" alt="Gallery 2">
     </div>
 
-    <div id="img-gal3" class="lightbox">
-        <a href="#close" class="lightbox-close"></a>
+    <input type="checkbox" id="pop-gal3" class="lightbox-toggle">
+    <div class="lightbox">
+        <label for="pop-gal3" class="lightbox-close"></label>
         <img class="expanded-img" src="images/Screenshot 2026-05-10 230025.png" alt="Gallery 3">
     </div>
 
-    <div id="img-gal4" class="lightbox">
-        <a href="#close" class="lightbox-close"></a>
+    <input type="checkbox" id="pop-gal4" class="lightbox-toggle">
+    <div class="lightbox">
+        <label for="pop-gal4" class="lightbox-close"></label>
         <img class="expanded-img" src="images/image_2026-05-13_225215117.png" alt="Gallery 4">
     </div>
 
@@ -374,9 +385,9 @@
             <div class="box">
                 <div class="box-header">my son &lt;3</div>
                 <div style="padding: 15px; display: flex; gap: 15px; align-items: center;">
-                    <a href="#img-son" class="son-link">
+                    <label for="pop-son" class="son-label">
                         <img src="images/image_2026-05-13_220516722.png" alt="Alan Preview">
-                    </a>
+                    </label>
                     
                     <div class="bestie-info">
                         <h4 style="color: #ff0000; margin: 0 0 5px 0; font-size: 14px; font-weight: bold;">Alan!!</h4>
@@ -390,18 +401,18 @@
             <div class="box">
                 <div class="box-header">the gallery</div>
                 <div class="gallery-grid">
-                    <a href="#img-gal1">
+                    <label for="pop-gal1">
                         <img src="images/white-aesthetic-sky-with-birds-e26askfub6g889bl.jpg" alt="Gallery Image 1">
-                    </a>
-                    <a href="#img-gal2">
+                    </label>
+                    <label for="pop-gal2">
                         <img src="images/a2754188671_10.jpg" alt="Gallery Image 2">
-                    </a>
-                    <a href="#img-gal3">
+                    </label>
+                    <label for="pop-gal3">
                         <img src="images/Screenshot 2026-05-10 230025.png" alt="Gallery Image 3">
-                    </a>
-                    <a href="#img-gal4">
+                    </label>
+                    <label for="pop-gal4">
                         <img src="images/image_2026-05-13_225215117.png" alt="Gallery Image 4">
-                    </a>
+                    </label>
                 </div>
             </div>
 
