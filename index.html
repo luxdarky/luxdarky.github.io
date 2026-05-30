@@ -633,7 +633,7 @@
 
     </div>
 
-    <script>
+<script>
         const audioTrack = document.getElementById('bg-track');
         const playToggleBtn = document.getElementById('play-toggle-btn');
         const volControl = document.getElementById('vol-control');
@@ -742,13 +742,15 @@
                     if (activeIndex !== currentLineTrack) {
                         currentLineTrack = activeIndex;
                         
-                        // FIX: Calculate the exact relative distance inside the box
-                        const containerHeight = lyricsWrapper.clientHeight;
-                        const lineRelativeTop = activeLine.offsetTop - lyricsWrapper.offsetTop;
-                        const lineHeight = activeLine.clientHeight;
+                        // FIX: Use bounding metrics to map positions accurately inside the viewport frame
+                        const containerRect = lyricsWrapper.getBoundingClientRect();
+                        const lineRect = activeLine.getBoundingClientRect();
+                        
+                        // Calculate where the line is relative to the current scroll position
+                        const relativeLineTop = lineRect.top - containerRect.top + lyricsWrapper.scrollTop;
                         
                         lyricsWrapper.scrollTo({
-                            top: lineRelativeTop - (containerHeight / 2) + (lineHeight / 2),
+                            top: relativeLineTop - (containerRect.height / 2) + (lineRect.height / 2),
                             behavior: 'smooth'
                         });
                     }
