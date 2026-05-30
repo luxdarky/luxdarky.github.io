@@ -378,6 +378,36 @@
             padding: 12px;
         }
 
+        /* --- SPOTIFY-STYLE LYRICS LAYOUT --- */
+        .lyrics-viewport {
+            max-height: 220px;
+            overflow-y: auto;
+            padding: 15px 5px;
+            scroll-behavior: smooth;
+            text-align: center;
+        }
+
+        /* Smooth scrollbar wipe */
+        .lyrics-viewport::-webkit-scrollbar {
+            width: 0px;
+        }
+
+        .lyric-line {
+            font-size: 11px;
+            color: #44445c; /* Secondary inactive line color */
+            margin: 12px 0;
+            transition: color 0.3s ease, text-shadow 0.3s ease, transform 0.3s ease;
+            line-height: 1.5;
+            font-family: inherit;
+        }
+
+        .lyric-line.active {
+            color: #ffffff; /* Active glowing color code */
+            font-weight: bold;
+            text-shadow: 0 0 10px rgba(156, 177, 230, 0.6);
+            transform: scale(1.04);
+        }
+
         /* ------------------------------------------- */
         /* 📱 RESPONSIVE PHONE MEDIA QUERY ADDITIONS   */
         /* ------------------------------------------- */
@@ -526,33 +556,10 @@
             
             <div class="box">
                 <div class="box-header">now playing...</div>
-                <div class="box-content" style="text-align: center; padding: 16px;">
-                    <div style="font-size: 13px; color: #ffffff; font-weight: bold; letter-spacing: 0.5px;">for her - whatsaheart</div>
+                <div class="box-content" style="padding: 16px;">
+                    <div style="font-size: 13px; color: #ffffff; font-weight: bold; letter-spacing: 0.5px; text-align: center; margin-bottom: 5px;">for her - whatsaheart</div>
                     
-                    <pre style="font-family: inherit; color: #66667d; margin: 8px 0 0 0; white-space: pre-wrap; font-size: 11px; line-height: 1.5;">
-My soul aches for you
-You belong with me
-Yeah, I was made for you
-And you were made for me
-Why do you still reject me? (I don't know)
-Bae, without me, you're empty (all alone)
-You, I'm calling for
-Tearing down the walls in my abode
-Lying on the floor in a pit of blood
-I still don't know if it's love or lust
-But I need her
-I will do it all for her
-Anything she wants me to
-My love, return my love or you'll fall down
-I'd cut out my heart if it meant that you'd hold it close
-(That you'd hold it close)
-You, I'm calling for
-Tearing down the walls in my abode
-Lying on the floor in a pit of blood
-I still don't know if it's love or lust
-But I need her
-I will do it all for her
-Anything she wants me to</pre>
+                    <div id="lyrics-wrapper" class="lyrics-viewport"></div>
                 </div>
             </div>
 
@@ -656,8 +663,79 @@ Anything she wants me to</pre>
             audioTrack.volume = e.target.value;
         });
 
+        /* --- 🎵 LYRICS SYNCHRONIZER ENGINE DATA --- */
+        // Note: Change these values (seconds) to fine-tune the timing with your track!
+        const lyricData = [
+            { time: 0.0, text: "♪" },
+            { time: 23.0, text: "My soul aches for you" },
+            { time: 26.3, text: "You belong with me" },
+            { time: 29.5, text: "Yeah, I was made for you" },
+            { time: 32.0, text: "And you were made for me" },
+            { time: 35.3, text: "Why do you still reject me? (I don't know)" },
+            { time: 41.0, text: "Bae, without me, you're empty (all alone)" },
+            { time: 48.0, text: "You, I'm calling for" },
+            { time: 58.0, text: "Tearing down the walls in my abode" },
+            { time: 64.0, text: "Lying on the floor in a pit of blood" },
+            { time: 70.0, text: "I still don't know if it's love or lust" },
+            { time: 74.8, text: "But I need her" },
+            { time: 81.0, text: "I will do it all for her" },
+            { time: 86.0, text: "Anything she wants me to" },
+            { time: 93.5, text: "My love, return my love or you'll fall down" },
+            { time: 104.7, text: "I'd cut out my heart if it meant that you'd hold it close" },
+            { time: 111.1, text: "(That you'd hold it close)" },
+            { time: 116.2, text: "You, I'm calling for" },
+            { time: 128.0, text: "Tearing down the walls in my abode" },
+            { time: 134.3, text: "Lying on the floor in a pit of blood" },
+            { time: 140.0, text: "I still don't know if it's love or lust" },
+            { time: 144.9, text: "But I need her" },
+            { time: 151.1, text: "I will do it all for her" },
+            { time: 155.9, text: "Anything she wants me to" },
+            { time: 163.0, text: "♪"}
+        ];
+
+        const lyricsWrapper = document.getElementById('lyrics-wrapper');
+
+        // Dynamically build individual paragraph text lines inside our engine
+        lyricData.forEach((line, index) => {
+            const p = document.createElement('p');
+            p.classList.add('lyric-line');
+            p.textContent = line.text;
+            p.setAttribute('id', `lyric-${index}`);
+            lyricsWrapper.appendChild(p);
+        });
+
+        // Monitor media timeline updates to trigger text adjustments/scrolling
+        audioTrack.addEventListener('timeupdate', () => {
+            const currentTime = audioTrack.currentTime;
+            let activeIndex = -1;
+
+            for (let i = 0; i < lyricData.length; i++) {
+                if (currentTime >= lyricData[i].time) {
+                    activeIndex = i;
+                } else {
+                    break;
+                }
+            }
+
+            if (activeIndex !== -1) {
+                const allLines = document.querySelectorAll('.lyric-line');
+                allLines.forEach(line => line.classList.remove('active'));
+
+                const activeLine = document.getElementById(`lyric-${activeIndex}`);
+                if (activeLine) {
+                    activeLine.classList.add('active');
+                    
+                    // Smooth auto-centering math calculation
+                    const containerHeight = lyricsWrapper.clientHeight;
+                    const lineOffset = activeLine.offsetTop;
+                    const lineHeight = activeLine.clientHeight;
+                    
+                    lyricsWrapper.scrollTop = lineOffset - (containerHeight / 2) + (lineHeight / 2);
+                }
+            }
+        });
+
         /* --- 🌐 DISCORD LIVE STATUS LIVE DATA TRACKER (LANYARD API) --- */
-        // CHANGE THIS TO YOUR ACCURATE DISCORD NUMERICAL ID
         const DISCORD_ID = '939252688456155177'; 
 
         async function fetchDiscordStatus() {
@@ -669,7 +747,6 @@ Anything she wants me to</pre>
                     const statusType = resData.data.discord_status;
                     const statusElement = document.getElementById('discord-status');
 
-                    // Evaluate online/offline status colors only
                     if (statusType === 'online') {
                         statusElement.textContent = '● ONLINE';
                         statusElement.style.color = '#00ff00';
@@ -690,9 +767,7 @@ Anything she wants me to</pre>
             }
         }
 
-        // Run immediately when page loads
         fetchDiscordStatus();
-        // Auto refresh status updates dynamically every 30 seconds
         setInterval(fetchDiscordStatus, 30000);
     </script>
 </body>
