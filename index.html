@@ -632,7 +632,7 @@
 
     </div>
 
-    <script>
+<script>
         const audioTrack = document.getElementById('bg-track');
         const playToggleBtn = document.getElementById('play-toggle-btn');
         const volControl = document.getElementById('vol-control');
@@ -674,7 +674,6 @@
         });
 
         /* --- 🎵 LYRICS SYNCHRONIZER ENGINE DATA --- */
-        // Note: Change these values (seconds) to fine-tune the timing with your track!
         const lyricData = [
             { time: 0.0, text: "♪"},
             { time: 23.2, text: "My soul aches for you" },
@@ -738,14 +737,20 @@
                 if (activeLine) {
                     activeLine.classList.add('active');
                     
-                    // ONLY scroll if the lyric line index actually changes! 
-                    // This gives the user back their scroll freedom between timestamps.
+                    // ONLY scroll if the lyric line index actually changes
                     if (activeIndex !== currentLineTrack) {
                         currentLineTrack = activeIndex;
                         
-                        activeLine.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'center'
+                        // SAFE INTERNAL SCROLLING MATH:
+                        // Calculates exactly where the lyric sits inside the viewport panel box,
+                        // centering it perfectly without touching the outer webpage container.
+                        const containerHeight = lyricsWrapper.clientHeight;
+                        const lineTop = activeLine.offsetTop;
+                        const lineHeight = activeLine.clientHeight;
+                        
+                        lyricsWrapper.scrollTo({
+                            top: lineTop - (containerHeight / 2) + (lineHeight / 2),
+                            behavior: 'smooth'
                         });
                     }
                 }
