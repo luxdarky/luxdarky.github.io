@@ -333,7 +333,8 @@
         }
         
         .gallery-grid label { 
-            display: block;                overflow: hidden;
+            display: block;
+            overflow: hidden;
             border: 1px solid #323244; 
             background: rgba(10, 10, 15, 0.4);
             width: 100%;
@@ -713,6 +714,9 @@
             lyricsWrapper.appendChild(p);
         });
 
+        // Tracks the index of the currently playing lyric line
+        let currentLineTrack = -1;
+
         // Monitor media timeline updates to trigger text adjustments/scrolling
         audioTrack.addEventListener('timeupdate', () => {
             const currentTime = audioTrack.currentTime;
@@ -734,11 +738,16 @@
                 if (activeLine) {
                     activeLine.classList.add('active');
                     
-                    // Smooth, modern positioning calculations handled by the browser engine
-                    activeLine.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'center'
-                    });
+                    // ONLY scroll if the lyric line index actually changes! 
+                    // This gives the user back their scroll freedom between timestamps.
+                    if (activeIndex !== currentLineTrack) {
+                        currentLineTrack = activeIndex;
+                        
+                        activeLine.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'center'
+                        });
+                    }
                 }
             }
         });
