@@ -282,6 +282,14 @@
             color: #cbd2eb;
         }
 
+        /* Live Status Text Style */
+        .status-dot {
+            margin-top: 10px; 
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
         /* --- INTERESTS TABLE --- */
         .info-table {
             width: 100%;
@@ -473,8 +481,8 @@
             <div class="profile-pic-container">
                 <img class="profile-pic" src="images/pfp.jpg" alt="luxdarky">
                 <div class="status-text">
-                    <div>Currently: Coding this stupid website</div>
-                    <div style="margin-top: 10px; color: #00ff00; font-weight: bold;">● ONLINE/AFK</div>
+                    <div id="custom-status">Currently: Coding this stupid website</div>
+                    <div id="discord-status" class="status-dot" style="color: #666677;">● LOADING STATUS...</div>
                 </div>
             </div>
 
@@ -629,6 +637,55 @@
         volControl.addEventListener('input', (e) => {
             audioTrack.volume = e.target.value;
         });
+
+        const DISCORD_ID = '939252688456155177'; 
+
+        async function fetchDiscordStatus() {
+            try {
+                const response = await fetch(`https://api.lanyard.rest/v1/users/${DISCORD_ID}`);
+                const resData = await response.json();
+                
+                if (resData.success && resData.data) {
+                    const statusData = resData.data;
+                    const statusType = statusData.discord_status;
+                    const statusElement = document.getElementById('discord-status');
+                    const customElement = document.getElementById('custom-status');
+
+                    if (statusType === 'online') {
+                        statusElement.textContent = '● ONLINE';
+                        statusElement.style.color = '#00ff00';
+                    } else if (statusType === 'idle') {
+                        statusElement.textContent = '● IDLE / AFK';
+                        statusElement.style.color = '#ffaa00';
+                    } else if (statusType === 'dnd') {
+                        statusElement.textContent = '● DO NOT DISTURB';
+                        statusElement.style.color = '#ff0033';
+                    } else {
+                        statusElement.textContent = '● OFFLINE';
+                        statusElement.style.color = '#66667d';
+                    }
+
+                    if (statusData.activities && statusData.activities.length > 0) {
+                        const customStatus = statusData.activities.find(act => act.type === 4);
+                        if (customStatus && customStatus.state) {
+                            customElement.textContent = `Currently: ${customStatus.state}`;
+                        } else {
+                            customElement.textContent = 'Currently: Chilling...';
+                        }
+                    } else {
+                        customElement.textContent = 'Currently: Chilling...';
+                    }
+                }
+            } catch (error) {
+                console.error("Lanyard system query drop error:", error);
+                document.getElementById('discord-status').textContent = '● STATUS ERROR';
+            }
+        }
+
+        // Run immediately when page loads
+        fetchDiscordStatus();
+        // Auto refresh status updates dynamically every 30 seconds
+        setInterval(fetchDiscordStatus, 30000);
     </script>
 </body>
 </html>
