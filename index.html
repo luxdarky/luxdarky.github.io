@@ -384,14 +384,18 @@
             overflow-y: auto;
             padding: 15px 5px;
             scroll-behavior: smooth;
-            text-align: center;
+            
+            /* Forces absolute block centering */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
-
+        
         /* Smooth scrollbar wipe */
         .lyrics-viewport::-webkit-scrollbar {
             width: 0px;
         }
-
+        
         .lyric-line {
             font-size: 11px;
             color: #44445c; /* Secondary inactive line color */
@@ -399,8 +403,12 @@
             transition: color 0.3s ease, text-shadow 0.3s ease, transform 0.3s ease;
             line-height: 1.5;
             font-family: inherit;
+            
+            /* Explicitly text-centers short and long text lines alike */
+            text-align: center;
+            width: 100%; 
         }
-
+        
         .lyric-line.active {
             color: #ffffff; /* Active glowing color code */
             font-weight: bold;
