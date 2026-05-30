@@ -333,8 +333,7 @@
         }
         
         .gallery-grid label { 
-            display: block; 
-            overflow: hidden;
+            display: block;                overflow: hidden;
             border: 1px solid #323244; 
             background: rgba(10, 10, 15, 0.4);
             width: 100%;
@@ -383,19 +382,21 @@
             max-height: 220px;
             overflow-y: auto;
             padding: 15px 5px;
-            scroll-behavior: smooth;
             
-            /* Forces absolute block centering */
+            /* Forces absolute dynamic row alignment */
             display: flex;
             flex-direction: column;
             align-items: center;
+            
+            /* Pinpoints the native scroll engine directly over the frame center point */
+            scroll-padding-block: 100px; 
         }
-        
+
         /* Smooth scrollbar wipe */
         .lyrics-viewport::-webkit-scrollbar {
             width: 0px;
         }
-        
+
         .lyric-line {
             font-size: 11px;
             color: #44445c; /* Secondary inactive line color */
@@ -404,11 +405,11 @@
             line-height: 1.5;
             font-family: inherit;
             
-            /* Explicitly text-centers short and long text lines alike */
+            /* Locks full block boundaries to ensure accurate centering */
             text-align: center;
-            width: 100%; 
+            width: 100%;
         }
-        
+
         .lyric-line.active {
             color: #ffffff; /* Active glowing color code */
             font-weight: bold;
@@ -674,31 +675,29 @@
         /* --- 🎵 LYRICS SYNCHRONIZER ENGINE DATA --- */
         // Note: Change these values (seconds) to fine-tune the timing with your track!
         const lyricData = [
-            { time: 0.0, text: "♪" },
-            { time: 23.0, text: "My soul aches for you" },
-            { time: 26.3, text: "You belong with me" },
-            { time: 29.5, text: "Yeah, I was made for you" },
-            { time: 32.0, text: "And you were made for me" },
-            { time: 35.3, text: "Why do you still reject me? (I don't know)" },
-            { time: 41.0, text: "Bae, without me, you're empty (all alone)" },
-            { time: 48.0, text: "You, I'm calling for" },
-            { time: 58.0, text: "Tearing down the walls in my abode" },
-            { time: 64.0, text: "Lying on the floor in a pit of blood" },
-            { time: 70.0, text: "I still don't know if it's love or lust" },
-            { time: 74.8, text: "But I need her" },
-            { time: 81.0, text: "I will do it all for her" },
-            { time: 86.0, text: "Anything she wants me to" },
-            { time: 93.5, text: "My love, return my love or you'll fall down" },
-            { time: 104.7, text: "I'd cut out my heart if it meant that you'd hold it close" },
-            { time: 111.1, text: "(That you'd hold it close)" },
-            { time: 116.2, text: "You, I'm calling for" },
-            { time: 128.0, text: "Tearing down the walls in my abode" },
-            { time: 134.3, text: "Lying on the floor in a pit of blood" },
-            { time: 140.0, text: "I still don't know if it's love or lust" },
-            { time: 144.9, text: "But I need her" },
-            { time: 151.1, text: "I will do it all for her" },
-            { time: 155.9, text: "Anything she wants me to" },
-            { time: 163.0, text: "♪"}
+            { time: 0.0, text: "My soul aches for you" },
+            { time: 3.5, text: "You belong with me" },
+            { time: 6.8, text: "Yeah, I was made for you" },
+            { time: 10.2, text: "And you were made for me" },
+            { time: 13.5, text: "Why do you still reject me? (I don't know)" },
+            { time: 17.0, text: "Bae, without me, you're empty (all alone)" },
+            { time: 20.5, text: "You, I'm calling for" },
+            { time: 24.0, text: "Tearing down the walls in my abode" },
+            { time: 27.5, text: "Lying on the floor in a pit of blood" },
+            { time: 31.0, text: "I still don't know if it's love or lust" },
+            { time: 34.5, text: "But I need her" },
+            { time: 37.8, text: "I will do it all for her" },
+            { time: 41.2, text: "Anything she wants me to" },
+            { time: 44.5, text: "My love, return my love or you'll fall down" },
+            { time: 48.0, text: "I'd cut out my heart if it meant that you'd hold it close" },
+            { time: 51.5, text: "(That you'd hold it close)" },
+            { time: 55.0, text: "You, I'm calling for" },
+            { time: 58.5, text: "Tearing down the walls in my abode" },
+            { time: 62.0, text: "Lying on the floor in a pit of blood" },
+            { time: 65.5, text: "I still don't know if it's love or lust" },
+            { time: 69.0, text: "But I need her" },
+            { time: 72.5, text: "I will do it all for her" },
+            { time: 76.0, text: "Anything she wants me to" }
         ];
 
         const lyricsWrapper = document.getElementById('lyrics-wrapper');
@@ -733,12 +732,11 @@
                 if (activeLine) {
                     activeLine.classList.add('active');
                     
-                    // Smooth auto-centering math calculation
-                    const containerHeight = lyricsWrapper.clientHeight;
-                    const lineOffset = activeLine.offsetTop;
-                    const lineHeight = activeLine.clientHeight;
-                    
-                    lyricsWrapper.scrollTop = lineOffset - (containerHeight / 2) + (lineHeight / 2);
+                    // Smooth, modern positioning calculations handled by the browser engine
+                    activeLine.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'center'
+                    });
                 }
             }
         });
@@ -763,7 +761,7 @@
                         statusElement.style.color = '#ffaa00';
                     } else if (statusType === 'dnd') {
                         statusElement.textContent = '● DO NOT DISTURB';
-                        statusElement.style.color = '#ff0033';
+                        statusElement.style.color = '#ff0000';
                     } else {
                         statusElement.textContent = '● OFFLINE';
                         statusElement.style.color = '#66667d';
