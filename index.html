@@ -282,7 +282,7 @@
             color: #cbd2eb;
         }
 
-        /* Live Status Text Style */
+        /* Live Status Dot Style */
         .status-dot {
             margin-top: 10px; 
             font-weight: bold;
@@ -387,19 +387,17 @@
             }
 
             .container {
-                grid-template-columns: 1fr; /* Snap 2 desktop columns into 1 clean mobile row stack */
+                grid-template-columns: 1fr;
                 gap: 15px;
                 padding: 12px;
             }
 
-            /* Make the image gallery look tidy on small screens */
             .gallery-grid {
                 grid-template-columns: repeat(3, 1fr);
                 gap: 6px;
                 padding: 8px;
             }
 
-            /* Anchor music engine bar safely along the bottom screen bounds */
             .music-pod {
                 left: 10px;
                 right: 10px;
@@ -407,12 +405,10 @@
                 justify-content: space-between;
             }
 
-            /* Grow the target sizes of popups on small screens */
             .lightbox-toggle:checked + .lightbox .expanded-img {
                 width: 85vw;
             }
 
-            /* Adjust splash screen sizing elements dynamically */
             .splash-title {
                 font-size: 26px;
             }
@@ -481,7 +477,7 @@
             <div class="profile-pic-container">
                 <img class="profile-pic" src="images/pfp.jpg" alt="luxdarky">
                 <div class="status-text">
-                    <div id="custom-status">Currently: Coding this stupid website</div>
+                    <div>Currently: Coding this stupid website</div>
                     <div id="discord-status" class="status-dot" style="color: #666677;">● LOADING STATUS...</div>
                 </div>
             </div>
@@ -615,11 +611,9 @@
 
         // Trigger on "Click to Enter" Button
         enterBtn.addEventListener('click', () => {
-            // Dismiss Splash screen overlay window visually
             splashOverlay.style.opacity = '0';
             splashOverlay.style.pointerEvents = 'none';
 
-            // Fire audio track up perfectly immediately upon interaction
             audioTrack.play().catch(err => {
                 console.log("Audio play failed on click interaction:", err);
             });
@@ -638,7 +632,9 @@
             audioTrack.volume = e.target.value;
         });
 
-        const DISCORD_ID = '939252688456155177'; 
+        /* --- 🌐 DISCORD LIVE STATUS LIVE DATA TRACKER (LANYARD API) --- */
+        // CHANGE THIS TO YOUR ACCURATE DISCORD NUMERICAL ID
+        const DISCORD_ID = 'YOUR_DISCORD_ID_HERE'; 
 
         async function fetchDiscordStatus() {
             try {
@@ -646,11 +642,10 @@
                 const resData = await response.json();
                 
                 if (resData.success && resData.data) {
-                    const statusData = resData.data;
-                    const statusType = statusData.discord_status;
+                    const statusType = resData.data.discord_status;
                     const statusElement = document.getElementById('discord-status');
-                    const customElement = document.getElementById('custom-status');
 
+                    // Evaluate online/offline status colors only
                     if (statusType === 'online') {
                         statusElement.textContent = '● ONLINE';
                         statusElement.style.color = '#00ff00';
@@ -663,17 +658,6 @@
                     } else {
                         statusElement.textContent = '● OFFLINE';
                         statusElement.style.color = '#66667d';
-                    }
-
-                    if (statusData.activities && statusData.activities.length > 0) {
-                        const customStatus = statusData.activities.find(act => act.type === 4);
-                        if (customStatus && customStatus.state) {
-                            customElement.textContent = `Currently: ${customStatus.state}`;
-                        } else {
-                            customElement.textContent = 'Currently: Chilling...';
-                        }
-                    } else {
-                        customElement.textContent = 'Currently: Chilling...';
                     }
                 }
             } catch (error) {
