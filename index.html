@@ -383,6 +383,7 @@
             max-height: 220px;
             overflow-y: auto;
             padding: 15px 5px;
+            position: relative; /* Establish local coordinate system */
             
             /* Forces absolute dynamic row alignment */
             display: flex;
@@ -632,7 +633,7 @@
 
     </div>
 
-<script>
+    <script>
         const audioTrack = document.getElementById('bg-track');
         const playToggleBtn = document.getElementById('play-toggle-btn');
         const volControl = document.getElementById('vol-control');
@@ -741,15 +742,13 @@
                     if (activeIndex !== currentLineTrack) {
                         currentLineTrack = activeIndex;
                         
-                        // SAFE INTERNAL SCROLLING MATH:
-                        // Calculates exactly where the lyric sits inside the viewport panel box,
-                        // centering it perfectly without touching the outer webpage container.
+                        // FIX: Calculate the exact relative distance inside the box
                         const containerHeight = lyricsWrapper.clientHeight;
-                        const lineTop = activeLine.offsetTop;
+                        const lineRelativeTop = activeLine.offsetTop - lyricsWrapper.offsetTop;
                         const lineHeight = activeLine.clientHeight;
                         
                         lyricsWrapper.scrollTo({
-                            top: lineTop - (containerHeight / 2) + (lineHeight / 2),
+                            top: lineRelativeTop - (containerHeight / 2) + (lineHeight / 2),
                             behavior: 'smooth'
                         });
                     }
