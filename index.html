@@ -13,24 +13,24 @@
         body {
             margin: 0;
             padding: 40px 20px 100px 20px;
-            font-family: Arial, sans-serif;
-            font-size: 12px;
-            color: #b1b1be;
-            background: linear-gradient(rgba(145, 145, 175, 0.22), rgba(20, 20, 35, 0.45)), 
-                        url('https://i.etsystatic.com/7478392/r/il/11a0be/4541531062/il_fullxfull.4541531062_k58m.jpg') no-repeat center center fixed;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 13px;
+            color: #ffffff;
+            /* Warm studio background gradient matched to the image */
+            background: linear-gradient(135deg, #e4c297, #bfa075) no-repeat center center fixed;
             background-size: cover;
             position: relative;
         }
 
+        /* Subtle scanline overlay to enhance the retro/scenecore vibe */
         body::before {
             content: " ";
             display: block;
             position: fixed;
             top: 0; left: 0; bottom: 0; right: 0;
-            background: linear-gradient(rgba(10, 10, 15, 0) 40%, rgba(0, 0, 0, 0.42) 50%), 
-                        linear-gradient(90deg, rgba(150, 120, 255, 0.04), rgba(0, 255, 0, 0.01), rgba(100, 100, 255, 0.04));
+            background: linear-gradient(rgba(18, 18, 18, 0) 40%, rgba(0, 0, 0, 0.15) 50%);
             z-index: 9998;
-            background-size: 100% 4px, 6px 100%;
+            background-size: 100% 4px;
             pointer-events: none;
         }
 
@@ -40,44 +40,45 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: #0b0b10;
+            background: #121216;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             z-index: 10005;
             transition: opacity 0.5s ease, pointer-events 0.5s ease;
+            border: 10px solid #e20074;
         }
 
         .splash-title {
-            font-family: Georgia, serif;
-            font-size: 32px;
-            font-style: italic;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 36px;
             font-weight: bold;
-            color: #ffffff;
+            color: #fffb00; /* Neon Yellow */
             margin-bottom: 20px;
-            text-shadow: 0 0 10px rgba(200, 200, 255, 0.4);
+            text-shadow: 3px 3px 0px #e20074, -2px -2px 0px #00d2ff;
         }
 
         .splash-btn {
-            background: #1c1c2b;
-            border: 1px solid #44445c;
-            color: #9cb1e6;
-            padding: 10px 24px;
+            background: #e20074; /* Magenta Pink */
+            border: 2px solid #fffb00;
+            color: #ffffff;
+            padding: 12px 28px;
             font-family: monospace;
-            font-size: 12px;
+            font-size: 14px;
+            font-weight: bold;
             text-transform: uppercase;
             cursor: pointer;
             letter-spacing: 1px;
             transition: all 0.2s ease;
-            box-shadow: 0 0 15px rgba(0,0,0,0.5);
+            box-shadow: 4px 4px 0px #00d2ff;
         }
 
         .splash-btn:hover {
-            background: #2b2b3d;
-            color: #ffffff;
-            border-color: #9cb1e6;
-            box-shadow: 0 0 20px rgba(156, 177, 230, 0.3);
+            background: #00d2ff; /* Cyan Blue */
+            color: #121216;
+            border-color: #ffffff;
+            box-shadow: 4px 4px 0px #e20074;
         }
 
         .lightbox-toggle {
@@ -105,8 +106,8 @@
             height: auto;
             max-height: 80vh;
             object-fit: contain;
-            border: 2px solid #9cb1e6;
-            box-shadow: 0 0 40px rgba(0,0,0,0.9);
+            border: 4px solid #fffb00;
+            box-shadow: 0 0 30px rgba(226, 0, 116, 0.6);
             transition: width 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.15);
         }
 
@@ -120,7 +121,7 @@
         .lightbox-toggle:checked + .lightbox {
             opacity: 1;
             pointer-events: auto;
-            background: rgba(5, 5, 10, 0.92);
+            background: rgba(18, 18, 22, 0.95);
         }
 
         .lightbox-toggle:checked + .lightbox .expanded-img {
@@ -132,19 +133,19 @@
             position: fixed;
             bottom: 20px;
             right: 20px;
-            background: rgba(14, 14, 22, 0.95);
-            border: 1px solid #44445c;
+            background: #121216;
+            border: 2px solid #e20074;
             padding: 10px 15px;
             display: flex;
             align-items: center;
             gap: 12px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.85);
+            box-shadow: 4px 4px 0px #00d2ff;
             z-index: 9999;
         }
 
         .music-pod-title {
-            font-size: 10px;
-            color: #9cb1e6;
+            font-size: 11px;
+            color: #fffb00;
             font-weight: bold;
             text-transform: uppercase;
             letter-spacing: 0.5px;
@@ -155,11 +156,12 @@
         }
 
         .music-btn {
-            background: #252538;
-            border: 1px solid #44445c;
-            color: #dde2ff;
+            background: #00d2ff;
+            border: 1px solid #121216;
+            color: #121216;
             padding: 4px 10px;
-            font-size: 10px;
+            font-size: 11px;
+            font-weight: bold;
             cursor: pointer;
             font-family: monospace;
             text-transform: uppercase;
@@ -167,7 +169,7 @@
         }
 
         .music-btn:hover {
-            background: #363654;
+            background: #e20074;
             color: #ffffff;
         }
 
@@ -175,32 +177,32 @@
             -webkit-appearance: none;
             appearance: none;
             width: 70px;
-            height: 4px;
-            background: #252538;
-            border: 1px solid #44445c;
+            height: 6px;
+            background: #252533;
+            border: 1px solid #e20074;
             outline: none;
         }
 
         .volume-slider::-webkit-slider-thumb {
             -webkit-appearance: none;
             appearance: none;
-            width: 10px;
-            height: 12px;
-            background: #9cb1e6;
+            width: 12px;
+            height: 14px;
+            background: #fffb00;
             cursor: pointer;
-            border: 1px solid #14141f;
+            border: 1px solid #121216;
         }
 
         .container {
             max-width: 950px;
             margin: 0 auto;
-            background-color: rgba(11, 11, 16, 0.86);
-            border: 1px solid #36364a;
-            padding: 20px;
+            background-color: rgba(18, 18, 22, 0.95); /* Deep solid charcoal */
+            border: 3px solid #00d2ff; /* Cyan Outline */
+            padding: 25px;
             display: grid;
             grid-template-columns: 310px 1fr;
             gap: 25px;
-            box-shadow: 0 0 35px rgba(0, 0, 0, 0.85);
+            box-shadow: 8px 8px 0px rgba(226, 0, 116, 0.8);
         }
 
         h1, h2, h3, h4 {
@@ -209,45 +211,48 @@
         }
 
         .profile-name {
-            font-family: Georgia, serif;
-            font-size: 26px;
-            font-style: italic;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 32px;
             font-weight: bold;
-            color: #ffffff;
+            color: #fffb00;
             text-align: center;
             margin-bottom: 15px;
             letter-spacing: 1px;
-            text-shadow: 0 0 6px rgba(200, 200, 255, 0.4);
+            text-shadow: 2px 2px 0px #e20074;
         }
 
         a {
-            color: #9cb1e6;
-            text-decoration: none;
+            color: #00d2ff;
+            text-decoration: underline;
+            font-weight: bold;
         }
 
         a:hover {
-            text-decoration: underline;
+            color: #fffb00;
+            text-decoration: none;
         }
 
         .box {
-            border: 1px solid #323244;
+            border: 2px solid #e20074; /* Pink Content Boxes */
             margin-bottom: 20px;
-            background: rgba(16, 16, 24, 0.75);
+            background: #181822;
             overflow: hidden;
         }
 
         .box-header {
-            background: linear-gradient(to bottom, #34344a, #181826);
-            padding: 7px 10px;
+            background: linear-gradient(to bottom, #e20074, #9b004f);
+            padding: 8px 12px;
             font-weight: bold;
-            color: #e2e2ff;
-            border-bottom: 1px solid #323244;
-            font-size: 12px;
+            color: #ffffff;
+            border-bottom: 2px solid #fffb00;
+            font-size: 13px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
         }
 
         .box-content {
             padding: 12px;
-            line-height: 1.4;
+            line-height: 1.5;
         }
 
         .profile-pic-container {
@@ -256,20 +261,19 @@
         }
 
         .profile-pic {
-            width: 170px;
-            height: 170px;
+            width: 180px;
+            height: 180px;
             object-fit: cover;
-            border: 1px solid #44445c;
-            filter: grayscale(100%) contrast(135%) brightness(95%);
+            border: 3px solid #fffb00; /* Bright yellow frame for your picture */
             display: inline-block;
         }
 
         .status-text {
             text-align: center;
             margin: 8px 0;
-            font-size: 11px;
+            font-size: 12px;
             line-height: 1.5;
-            color: #cbd2eb;
+            color: #ffffff;
         }
 
         .status-dot {
@@ -285,25 +289,26 @@
         }
 
         .info-table td {
-            padding: 8px;
+            padding: 10px;
             border: 1px solid #2d2d3b;
             vertical-align: top;
         }
 
         .info-table .label {
-            width: 85px;
-            background: rgba(40, 40, 58, 0.5);
-            color: #dde2ff;
-            font-weight: normal;
+            width: 90px;
+            background: rgba(226, 0, 116, 0.15);
+            color: #fffb00;
+            font-weight: bold;
         }
 
         .blurb-section h3 {
-            font-size: 12px;
-            color: #ffffff;
+            font-size: 13px;
+            color: #00d2ff;
             margin-top: 15px;
             margin-bottom: 3px;
             text-transform: uppercase;
         }
+        
         .blurb-section h3:first-child {
             margin-top: 0;
         }
@@ -311,7 +316,7 @@
         .son-label { 
             display: inline-block;
             overflow: hidden;
-            border: 1px solid #44445c; 
+            border: 2px solid #00d2ff; 
             width: 100px; 
             height: 100px; 
             flex-shrink: 0;
@@ -321,38 +326,32 @@
         .gallery-grid label { 
             display: block;
             overflow: hidden;
-            border: 1px solid #323244; 
-            background: rgba(10, 10, 15, 0.4);
+            border: 2px solid #e20074; 
+            background: #121216;
             width: 100%;
             height: auto;
             cursor: pointer;
         }
 
-        .son-label img {
+        .son-label img, .gallery-grid label img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            filter: grayscale(20%) contrast(115%);
             transition: transform 0.2s ease;
             display: block;
         }
 
         .gallery-grid label img {
-            width: 100%;
-            height: auto;
             max-height: 120px;
             object-fit: scale-down;
-            filter: grayscale(20%) contrast(115%);
-            transition: transform 0.2s ease;
-            display: block;
         }
 
         .son-label:hover img, .gallery-grid label:hover img {
-            transform: scale(1.05);
+            transform: scale(1.08);
         }
 
         .gallery-grid label:hover {
-            border-color: #9cb1e6;
+            border-color: #fffb00;
         }
 
         .gallery-grid {
@@ -368,11 +367,9 @@
             overflow-y: auto;
             padding: 15px 5px;
             position: relative; 
-            
             display: flex;
             flex-direction: column;
             align-items: center;
-            
             scroll-padding-block: 100px; 
         }
 
@@ -381,22 +378,21 @@
         }
 
         .lyric-line {
-            font-size: 11px;
-            color: #44445c; 
+            font-size: 12px;
+            color: #666680; 
             margin: 12px 0;
             transition: color 0.3s ease, text-shadow 0.3s ease, transform 0.3s ease;
             line-height: 1.5;
             font-family: inherit;
-            
             text-align: center;
             width: 100%;
         }
 
         .lyric-line.active {
-            color: #ffffff; 
+            color: #fffb00; 
             font-weight: bold;
-            text-shadow: 0 0 10px rgba(156, 177, 230, 0.6);
-            transform: scale(1.04);
+            text-shadow: 0 0 8px rgba(255, 251, 0, 0.6);
+            transform: scale(1.05);
         }
 
         @media (max-width: 768px) {
@@ -545,7 +541,7 @@
             <div class="box">
                 <div class="box-header">now playing...</div>
                 <div class="box-content" style="padding: 16px;">
-                    <div style="font-size: 13px; color: #ffffff; font-weight: bold; letter-spacing: 0.5px; text-align: center; margin-bottom: 5px;">for her - whatsaheart</div>
+                    <div style="font-size: 13px; color: #fffb00; font-weight: bold; letter-spacing: 0.5px; text-align: center; margin-bottom: 5px;">for her - whatsaheart</div>
                     
                     <div id="lyrics-wrapper" class="lyrics-viewport"></div>
                 </div>
@@ -570,8 +566,8 @@
                     </label>
                     
                     <div class="bestie-info">
-                        <h4 style="color: #ffffff; margin: 0 0 5px 0; font-size: 14px; font-weight: bold;">Alan!!</h4>
-                        <p style="margin: 0; font-size: 12px; line-height: 1.4; color: #b1b1be;">
+                        <h4 style="color: #fffb00; margin: 0 0 5px 0; font-size: 14px; font-weight: bold;">Alan!!</h4>
+                        <p style="margin: 0; font-size: 12px; line-height: 1.4; color: #ffffff;">
                             This is my son! (not really but whatevs) We've known each other since June of 2025 (probably even longer than that) and he is basically the only person who gets my music and movie taste. :P
                         </p>
                     </div>
@@ -601,7 +597,7 @@
 
             <div class="box">
                 <div class="box-header">commentz</div>
-                <div class="box-content" style="text-align: center; color: #666677; font-style: italic; padding: 15px;">
+                <div class="box-content" style="text-align: center; color: #00d2ff; font-style: italic; padding: 15px; font-weight: bold;">
                     Still working on implementing this, please be patient! ❤️
                 </div>
             </div>
