@@ -1,7 +1,7 @@
 <!DOCTYPE html><html lang="en"><head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>xX_luxdarky_Xx's cozy space</title>
+    <title>luxdarky's cozy space</title>
     <link rel="icon" type="image/png" href="favicon.png">
     <style>
         * {
@@ -17,18 +17,31 @@
             background: #000000 url("images/Untitled.png") repeat center center fixed;
             background-size: auto;
             position: relative;
+            overflow-x: hidden;
         }
 
-        /* 2000s CRT/Scanline Overlays */
-        body::before {
-            content: " ";
-            display: block;
+        #star-container {
             position: fixed;
-            top: 0; left: 0; bottom: 0; right: 0;
-            background: linear-gradient(rgba(18, 18, 18, 0) 40%, rgba(0, 0, 0, 0.4) 50%);
-            z-index: 9998;
-            background-size: 100% 4px;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             pointer-events: none;
+            z-index: 9999;
+            overflow: hidden;
+        }
+
+        .falling-star {
+            position: absolute;
+            top: -20px;
+            pointer-events: none;
+            animation: fall linear forwards;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(105vh) rotate(360deg);
+            }
         }
 
         #splash-overlay {
@@ -494,9 +507,11 @@
         }
     </style></head><body>
 
+    <div id="star-container"></div>
+
     <div id="splash-overlay">
-        <div class="splash-title">xX_luxdarky_Xx's cozy space</div>
-        <button id="enter-btn" class="splash-btn">Are you ready, my love...? RAWR!</button>
+        <div class="splash-title">luxdarky's cozy space</div>
+        <button id="enter-btn" class="splash-btn">Are you ready, my love...?</button>
     </div>
 
     <audio id="bg-track" loop>
@@ -504,7 +519,7 @@
     </audio>
 
     <div class="music-pod">
-        <div class="music-pod-title">˚ʚ♡ɞ˚ SCENE PLAYER ˚ʚ♡ɞ˚</div>
+        <div class="music-pod-title">˚ʚ♡ɞ˚ MUSIC PLAYER ˚ʚ♡ɞ˚</div>
         <button id="play-toggle-btn" class="music-btn">Play</button>
         <input id="vol-control" class="volume-slider" type="range" min="0" max="1" step="0.05" value="0.4">
     </div>
@@ -549,7 +564,7 @@
     <div class="container">
         
         <div class="left-col">
-            <div class="profile-name">xX_luxdarky_Xx</div>
+            <div class="profile-name">luxdarky</div>
             
             <div class="profile-pic-container">
                 <img class="profile-pic" src="images/pfp.jpg" alt="luxdarky">
@@ -603,7 +618,7 @@
         <div class="right-col">
             
             <div class="box">
-                <div class="box-header">🎵 Now Jamming 🎵</div>
+                <div class="box-header">🎵 Now Playing 🎵</div>
                 <div class="box-content" style="padding: 16px;">
                     <div style="font-size: 14px; color: #ffff00; font-family: 'Arial Black', sans-serif; text-shadow: 2px 2px 0 #000; text-align: center; margin-bottom: 8px;">for her - whatsaheart</div>
                     
@@ -644,7 +659,7 @@
                             <img src="images/c57.gif" alt="i dunno 67">
                             <img src="images/c59.gif" alt="angelic">
                             <img src="images/d28.gif" alt="science">
-                            <img src="images/d95" alt="local loser boy">
+                            <img src="images/d95.gif" alt="local loser boy">
                         </div>
 
                         <div class="showcase-title" style="margin-top: 10px;">Buttons</div>
@@ -678,9 +693,16 @@
                 <div class="box">
                     <div class="box-header">my playlist!!</div>
                     <div class="box-content" style="text-align: center;">
-                
-                    <iframe style="border-radius:12px; border: 2px dashed #00ff00;" src="https://open.spotify.com/playlist/5jLaYVNjS6XBMSmBoPb9H8?si=5180d8fbfb254de2" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-                
+                        <iframe 
+                            style="border-radius:0px;" 
+                            src="https://open.spotify.com/embed/playlist/5jLaYVNjS6XBMSmBoPb9H8?utm_source=generator&theme=0" 
+                            width="100%" 
+                            height="152" 
+                            frameBorder="0" 
+                            allowfullscreen="" 
+                            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+                            loading="lazy">
+                        </iframe>
                     </div>
                 </div>
             </div>
@@ -864,4 +886,30 @@
 
         fetchDiscordStatus();
         setInterval(fetchDiscordStatus, 30000);
+
+        const starContainer = document.getElementById('star-container');
+        const starImageSrc = 'images/star.png';
+
+        function createStar() {
+            const star = document.createElement('img');
+            star.src = starImageSrc;
+            star.classList.add('falling-star');
+            star.style.left = Math.random() * 100 + 'vw';
+            
+            const size = Math.random() * 15 + 10;
+            star.style.width = size + 'px';
+            star.style.height = 'auto';
+            
+            const duration = Math.random() * 4 + 4;
+            star.style.animationDuration = duration + 's';
+            star.style.opacity = Math.random() * 0.5 + 0.5;
+
+            starContainer.appendChild(star);
+
+            setTimeout(() => {
+                star.remove();
+            }, duration * 1000);
+        }
+
+        setInterval(createStar, 300);
     </script></body></html>
