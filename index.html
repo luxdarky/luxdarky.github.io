@@ -189,16 +189,18 @@
             transition: background-color 0.35s ease, opacity 0.35s ease;
         }
         .lightbox .expanded-img {
-            width: 0vw; height: auto; max-height: 82vh;
+            display: block;
+            width: auto; height: auto;
+            max-width: 0vw; max-height: 82vh;
             object-fit: contain;
             border: 1px solid var(--khaki);
             border-radius: 10px;
-            transition: width 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.15);
-        }
-        .lightbox-close { position: absolute; inset: 0; cursor: default; }
-        .lightbox-toggle:checked + .lightbox { opacity: 1; pointer-events: auto; background: rgba(21,22,15,0.92); }
-        .lightbox-toggle:checked + .lightbox .expanded-img { width: 42vw; }
-        @media (max-width: 640px) { .lightbox-toggle:checked + .lightbox .expanded-img { width: 88vw; } }
+            transition: max-width 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.15);
+         }
+         .lightbox-close { position: absolute; inset: 0; cursor: default; }
+         .lightbox-toggle:checked + .lightbox { opacity: 1; pointer-events: auto; background: rgba(21,22,15,0.92); }
+         .lightbox-toggle:checked + .lightbox .expanded-img { max-width: 42vw; }
+        @media (max-width: 640px) { .lightbox-toggle:checked + .lightbox .expanded-img { max-width: 88vw; } }
 
         .link-list { list-style: none; margin: 0 0 16px 0; padding: 0; }
         .link-list li {
@@ -223,20 +225,24 @@
     </style></head><body>
 
     <input type="checkbox" id="pop-gal1" class="lightbox-toggle">
-    <div class="lightbox"><label for="pop-gal1" class="lightbox-close"></label><img class="expanded-img" src="images/white-aesthetic-sky-with-birds-e26askfub6g889bl.jpg" alt="Gallery 1"></div>
-    <input type="checkbox" id="pop-gal2" class="lightbox-toggle">
-    <div class="lightbox"><label for="pop-gal2" class="lightbox-close"></label><img class="expanded-img" src="images/a2754188671_10.jpg" alt="Gallery 2"></div>
-    <input type="checkbox" id="pop-gal3" class="lightbox-toggle">
-    <div class="lightbox"><label for="pop-gal3" class="lightbox-close"></label><img class="expanded-img" src="images/Screenshot 2026-05-10 230025.png" alt="Gallery 3"></div>
-    <input type="checkbox" id="pop-gal4" class="lightbox-toggle">
-    <div class="lightbox"><label for="pop-gal4" class="lightbox-close"></label><img class="expanded-img" src="images/DSC00223.JPG" alt="Gallery 4"></div>
-    <input type="checkbox" id="pop-gal5" class="lightbox-toggle">
-    <div class="lightbox"><label for="pop-gal5" class="lightbox-close"></label><img class="expanded-img" src="images/0810090097435.jpg" alt="Gallery 5"></div>
-    <input type="checkbox" id="pop-brain" class="lightbox-toggle">
-    <div class="lightbox"><label for="pop-brain" class="lightbox-close"></label><img class="expanded-img" src="images/brainsss.png" alt="brain imaging"></div>
+<div class="lightbox"><label for="pop-gal1" class="lightbox-close"></label><img class="expanded-img" src="images/white-aesthetic-sky-with-birds-e26askfub6g889bl.jpg" alt="Gallery 1"></div>
+<input type="checkbox" id="pop-gal2" class="lightbox-toggle">
+<div class="lightbox"><label for="pop-gal2" class="lightbox-close"></label><img class="expanded-img" src="images/DSC00323.jpg" alt="Gallery 2"></div>
+<input type="checkbox" id="pop-gal3" class="lightbox-toggle">
+<div class="lightbox"><label for="pop-gal3" class="lightbox-close"></label><img class="expanded-img" src="images/DSC00322.jpg" alt="Gallery 3"></div>
+<input type="checkbox" id="pop-gal4" class="lightbox-toggle">
+<div class="lightbox"><label for="pop-gal4" class="lightbox-close"></label><img class="expanded-img" src="images/DSC00223.JPG" alt="Gallery 4"></div>
+<input type="checkbox" id="pop-gal5" class="lightbox-toggle">
+<div class="lightbox"><label for="pop-gal5" class="lightbox-close"></label><img class="expanded-img" src="images/DSC00326.jpg" alt="Gallery 5"></div>
+<input type="checkbox" id="pop-gal6" class="lightbox-toggle">
+<div class="lightbox"><label for="pop-gal6" class="lightbox-close"></label><img class="expanded-img" src="images/DSC00315.jpg" alt="Gallery 6"></div>
+<input type="checkbox" id="pop-gal7" class="lightbox-toggle">
+<div class="lightbox"><label for="pop-gal7" class="lightbox-close"></label><img class="expanded-img" src="images/DSC00309.jpg" alt="Gallery 7"></div>
+<input type="checkbox" id="pop-brain" class="lightbox-toggle">
+<div class="lightbox"><label for="pop-brain" class="lightbox-close"></label><img class="expanded-img" src="images/brainsss.png" alt="brain imaging"></div>
 
     <div class="banner">
-        <img src="images/white-aesthetic-sky-with-birds-e26askfub6g889bl.jpg" alt="banner">
+        <img src="images/DSC00323.jpg" alt="banner">
     </div>
     <div class="hero-header">
         <img class="avatar" src="images/pfp.jpg" alt="luxdarky">
@@ -257,7 +263,7 @@
                 <div class="box-content">
                     <p style="margin-bottom: 14px;">hmu whenever!! i answer pretty fast since im unemployed lol, so dont be shy ^^</p>
                     <ul class="link-list">
-                        <li>Discord <a href="discordapp.com/users/939252688456155177" target="_blank">luxdarky ↗</a></li>
+                        <li>Discord <a href="https://www.discord.com/users/939252688456155177" target="_blank">luxdarky ↗</a></li>
                         <li>Roblox <a href="https://www.roblox.com/users/1499630738/profile" target="_blank">luxdarky ↗</a></li>
                     </ul>
                 </div>
@@ -317,10 +323,12 @@
                 <div class="box-content">
                     <div class="gallery-grid">
                         <label for="pop-gal1"><img src="images/white-aesthetic-sky-with-birds-e26askfub6g889bl.jpg" alt="Gallery 1"></label>
-                        <label for="pop-gal2"><img src="images/a2754188671_10.jpg" alt="Gallery 2"></label>
-                        <label for="pop-gal3"><img src="images/Screenshot 2026-05-10 230025.png" alt="Gallery 3"></label>
+                        <label for="pop-gal2"><img src="images/DSC00323.jpg" alt="Gallery 2"></label>
+                        <label for="pop-gal3"><img src="images/DSC00322.jpg" alt="Gallery 3"></label>
                         <label for="pop-gal4"><img src="images/DSC00223.JPG" alt="Gallery 4"></label>
-                        <label for="pop-gal5"><img src="images/0810090097435.jpg" alt="Gallery 5"></label>
+                        <label for="pop-gal5"><img src="images/DSC00326.jpg" alt="Gallery 5"></label>
+                        <label for="pop-ga16"><img src="images/DSC00315.jpg" alt="Gallery 6"></label>
+                        <label for="pop-ga17"><img src="images/DSC00309.jpg" alt="Gallery 7"></label>
                     </div>
                 </div>
             </div>
