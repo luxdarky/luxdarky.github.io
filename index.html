@@ -3,769 +3,325 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>luxdarky's cozy space</title>
     <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
     <style>
-        * {
-            box-sizing: border-box;
+        @import url('https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+        :root {
+            --ink: #011138;
+            --panel: rgba(1, 17, 56, 0.55);
+            --panel-header: rgba(185, 169, 143, 0.16);
+            --line: rgba(185, 169, 143, 0.35);
+            --khaki: #d9cbb0;
+            --khaki-dim: #c3b59a;
+            --bone: #f4eedd;
+            --online: #8bb98f;
+            --idle: #d9b665;
+            --dnd: #c97b6c;
+            --offline: #9a927e;
         }
-        
+
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
         body {
             margin: 0;
-            padding: 40px 20px 100px 20px;
-            font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-            font-size: 13px;
-            color: #ffffff;
-            background: #000000 url("images/Untitled.png") repeat center center fixed;
-            background-size: auto;
-            position: relative;
-            overflow-x: hidden;
+            background: linear-gradient(180deg, #011138 0%, #041a4a 25%, #2c3350 50%, #6f6255 72%, #b9a98f 100%);
+            color: var(--bone);
+            font-family: 'Inter', -apple-system, sans-serif;
+            font-size: 15px;
+            line-height: 1.65;
         }
 
-        #star-container {
-            position: fixed;
-            top: 0;
-            left: 0;
+        a { color: var(--khaki); text-decoration: none; border-bottom: 1px solid var(--line); }
+        a:hover { border-color: var(--khaki); }
+
+        .mono {
+            font-family: 'IBM Plex Mono', monospace;
+            letter-spacing: 0.07em;
+            text-transform: uppercase;
+        }
+
+        .shell { max-width: 760px; margin: 0 auto; padding: 0 24px 80px 24px; }
+        @media (max-width: 640px) { .shell { padding: 0 16px 70px 16px; } }
+
+        .banner {
             width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 9999;
+            aspect-ratio: 8 / 2;
             overflow: hidden;
+            background: #0a1d4d;
+        }
+        .banner img { width: 100%; height: 100%; object-fit: cover; filter: saturate(0.85); }
+
+        .hero-header { max-width: 760px; margin: 0 auto; padding: 0 24px; position: relative; }
+        @media (max-width: 640px) { .hero-header { padding: 0 16px; } }
+
+        .avatar {
+            width: 108px;
+            height: 108px;
+            border-radius: 50%;
+            border: 5px solid #0a1d4d;
+            object-fit: cover;
+            margin-top: -40px;
+            display: block;
+            background: var(--panel);
         }
 
-        .falling-star {
-            position: absolute;
-            top: -20px;
-            pointer-events: none;
-            animation: fall linear forwards;
+        .hero-body { padding: 18px 0 40px 0; }
+
+        .hero-name {
+            font-family: 'Newsreader', serif;
+            font-weight: 500;
+            font-size: 38px;
+            margin: 0 0 6px 0;
+            color: var(--bone);
         }
 
-        @keyframes fall {
-            to {
-                transform: translateY(105vh) rotate(360deg);
-            }
-        }
-
-        #splash-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #000000;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 10005;
-            transition: opacity 0.5s ease, pointer-events 0.5s ease;
-            border: 15px double #00ff00;
-        }
-
-        .splash-title {
-            font-family: 'Impact', 'Arial Black', sans-serif;
-            font-size: 48px;
-            text-transform: uppercase;
-            color: #ffff00; 
-            margin-bottom: 20px;
-            text-shadow: 4px 4px 0px #000000, -3px -3px 0px #00ff00;
-            letter-spacing: -1px;
-        }
-
-        .splash-btn {
-            background: #00ff00; 
-            border: 4px solid #ffff00;
-            color: #000000;
-            padding: 15px 35px;
-            font-family: 'Arial Black', sans-serif;
-            font-size: 16px;
-            font-weight: bold;
-            text-transform: uppercase;
-            cursor: pointer;
-            letter-spacing: 1px;
-            transition: all 0.1s ease;
-            box-shadow: 6px 6px 0px #ffff00;
-        }
-
-        .splash-btn:hover {
-            background: #ffff00; 
-            color: #000000;
-            border-color: #00ff00;
-            box-shadow: -6px -6px 0px #00ff00;
-        }
-
-        .lightbox-toggle {
-            display: none;
-        }
-
-        .lightbox {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0);
-            z-index: 10000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            pointer-events: none;
-            opacity: 0;
-            transition: background-color 0.4s ease, opacity 0.4s ease;
-        }
-
-        .lightbox .expanded-img {
-            width: 0vw; 
-            height: auto;
-            max-height: 80vh;
-            object-fit: contain;
-            border: 6px solid #ffff00;
-            box-shadow: 0 0 40px #00ff00;
-            transition: width 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.15);
-        }
-
-        .lightbox-close {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            cursor: default;
-        }
-
-        .lightbox-toggle:checked + .lightbox {
-            opacity: 1;
-            pointer-events: auto;
-            background: rgba(0, 0, 0, 0.95);
-        }
-
-        .lightbox-toggle:checked + .lightbox .expanded-img {
-            width: 33.33vw;
-            height: auto;
-        }
-
-        .music-pod {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: #000000;
-            border: 3px dashed #00ff00;
-            padding: 12px 18px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            box-shadow: 6px 6px 0px #ffff00;
-            z-index: 9999;
-        }
-
-        .music-pod-title {
+        .hero-sub {
+            font-family: 'IBM Plex Mono', monospace;
             font-size: 12px;
-            color: #ffff00;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            max-width: 110px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
+            color: var(--khaki-dim);
+            letter-spacing: 0.04em;
+            margin-bottom: 14px;
         }
 
-        .music-btn {
-            background: #ffff00;
-            border: 2px solid #000000;
-            color: #000000;
-            padding: 5px 12px;
+        .hero-tagline {
+            font-family: 'Newsreader', serif;
+            font-style: italic;
+            font-size: 17px;
+            color: var(--khaki);
+            margin-bottom: 16px;
+        }
+
+        .status-line {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'IBM Plex Mono', monospace;
             font-size: 11px;
-            font-weight: bold;
-            cursor: pointer;
-            font-family: Arial, sans-serif;
             text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--khaki-dim);
         }
+        .dot { width: 7px; height: 7px; border-radius: 50%; display: inline-block; }
 
-        .music-btn:hover {
-            background: #00ff00;
-            color: #000000;
-        }
-
-        .volume-slider {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 70px;
-            height: 8px;
-            background: #111;
-            border: 1px solid #00ff00;
-            outline: none;
-        }
-
-        .volume-slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 12px;
-            height: 16px;
-            background: #ffff00;
-            cursor: pointer;
-            border: 1px solid #000000;
-        }
-
-        .container {
-            max-width: 950px;
-            margin: 0 auto;
-            background-color: #000000; 
-            border: 6px solid #ffff00; 
-            padding: 25px;
+        .box-grid {
             display: grid;
-            grid-template-columns: 310px 1fr;
-            gap: 25px;
-            box-shadow: 12px 12px 0px #00ff00;
+            grid-template-columns: 1fr 1fr;
+            gap: 22px;
         }
+        .box-grid .box-full { grid-column: 1 / -1; }
 
-        h1, h2, h3, h4 {
-            margin: 0 0 8px 0;
-            font-weight: bold;
-        }
-
-        .profile-name {
-            font-family: 'Impact', 'Arial Black', sans-serif;
-            font-size: 42px;
-            text-transform: lowercase;
-            color: #00ff00;
-            text-align: center;
-            margin-bottom: 15px;
-            letter-spacing: -2px;
-            text-shadow: 4px 4px 0px #ffff00, -2px -2px 0px #000000;
-        }
-
-        a {
-            color: #ffff00;
-            text-decoration: underline;
-            font-weight: bold;
-        }
-
-        a:hover {
-            color: #00ff00;
-            background: #000000;
-            text-decoration: none;
+        @media (max-width: 640px) {
+            .box-grid { grid-template-columns: 1fr; }
         }
 
         .box {
-            border: 3px solid #00ff00; 
-            margin-bottom: 25px;
-            background: #111111;
+            border: 1px solid var(--line);
+            background: var(--panel);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-radius: 14px;
             overflow: hidden;
-            box-shadow: 5px 5px 0px #ffff00;
+            margin-bottom: 22px;
+            box-shadow: 0 8px 30px rgba(1,17,56,0.18);
         }
+        .box-grid .box { margin-bottom: 0; }
 
         .box-header {
-            background: repeating-linear-gradient(
-              45deg,
-              #000000,
-              #000000 10px,
-              #00ff00 10px,
-              #00ff00 20px
-            );
-            padding: 10px 12px;
-            font-family: 'Arial Black', sans-serif;
-            font-weight: bold;
-            color: #ffffff;
-            border-bottom: 3px solid #ffff00;
-            font-size: 14px;
-            text-transform: uppercase;
-            text-shadow: 2px 2px 0px #000000;
-        }
-
-        .box-content {
-            padding: 15px;
-            line-height: 1.6;
-        }
-
-        .profile-pic-container {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .profile-pic {
-            width: 220px;
-            height: 220px;
-            object-fit: cover;
-            border: 4px dashed #ffff00; 
-            display: inline-block;
-            box-shadow: 8px 8px 0px #00ff00;
-        }
-
-        .status-text {
-            text-align: center;
-            margin: 20px 0 8px 0;
-            font-size: 13px;
-            font-weight: bold;
-            line-height: 1.5;
-            color: #ffffff;
-            background: #000;
-            padding: 8px;
-            border: 1px dashed #00ff00;
-        }
-
-        .status-dot {
-            margin-top: 10px; 
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .info-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .info-table td {
-            padding: 12px;
-            border: 2px solid #00ff00;
-            vertical-align: top;
-            background: #000;
-        }
-
-        .info-table .label {
-            width: 90px;
-            background: #ffff00;
-            color: #000000;
-            font-family: 'Arial Black', sans-serif;
-            font-weight: bold;
+            background: var(--panel-header);
+            padding: 11px 16px;
+            font-family: 'IBM Plex Mono', monospace;
+            font-weight: 500;
             font-size: 11px;
+            letter-spacing: 0.1em;
             text-transform: uppercase;
+            color: var(--khaki);
+            border-bottom: 1px solid var(--line);
         }
 
-        .blurb-section h3 {
-            font-family: 'Arial Black', sans-serif;
-            font-size: 14px;
-            color: #ffff00;
-            margin-top: 15px;
-            margin-bottom: 5px;
-            text-transform: uppercase;
-            border-bottom: 2px dotted #00ff00;
-        }
-        
-        .blurb-section h3:first-child {
-            margin-top: 0;
-        }
+        .box-content { padding: 20px; }
+        .box-content p { margin: 0; color: var(--bone); font-size: 14.5px; }
 
-        .brain-label { 
-            display: inline-block;
-            overflow: hidden;
-            border: 3px solid #ffff00; 
-            width: 100px; 
-            height: 100px; 
+        .info-table { width: 100%; border-collapse: collapse; }
+        .info-table td { padding: 14px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+        .info-table tr:last-child td { border-bottom: none; }
+        .info-table .label {
+            width: 100px;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 11px;
+            letter-spacing: 0.07em;
+            text-transform: uppercase;
+            color: var(--khaki);
+            padding-right: 16px;
+        }
+        .info-table td:last-child { color: var(--bone); font-size: 14px; }
+
+        .brain-flex { display: flex; gap: 18px; align-items: flex-start; }
+        .brain-flex img {
+            width: 130px; height: 130px; object-fit: cover;
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            filter: grayscale(30%);
             flex-shrink: 0;
             cursor: pointer;
         }
-        
-        .gallery-grid label { 
-            display: block;
-            overflow: hidden;
-            border: 3px solid #00ff00; 
-            background: #000000;
-            width: 100%;
-            height: auto;
-            cursor: pointer;
-            box-shadow: 3px 3px 0px #ffff00;
-        }
+        .brain-flex p { font-size: 13px; color: var(--khaki-dim); margin: 0; line-height: 1.5; }
+        @media (max-width: 640px) { .brain-flex { flex-direction: column; } .brain-flex img { width: 100%; height: 180px; } }
 
-        .brain-label img, .gallery-grid label img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.1s ease;
-            display: block;
-        }
-
-        .gallery-grid label img {
-            max-height: 120px;
-            object-fit: scale-down;
-        }
-
-        .brain-label:hover img, .gallery-grid label:hover img {
-            transform: scale(1.1) rotate(2deg);
-        }
-
-        .gallery-grid label:hover {
-            border-color: #ffff00;
-            box-shadow: -3px -3px 0px #00ff00;
-        }
-
+        .lightbox-toggle { display: none; }
         .gallery-grid {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
-            align-items: center;
-            gap: 12px;
-            padding: 15px;
-        }
-
-        .lyrics-viewport {
-            max-height: 220px;
-            overflow-y: auto;
-            padding: 15px 5px;
-            position: relative; 
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            scroll-padding-block: 100px; 
-            background: #000;
-            border: 2px dashed #ffff00;
-        }
-
-        .lyrics-viewport::-webkit-scrollbar {
-            width: 4px;
-            background: #000;
-        }
-        .lyrics-viewport::-webkit-scrollbar-thumb {
-            background: #00ff00;
-        }
-
-        .lyric-line {
-            font-size: 13px;
-            color: #444444; 
-            margin: 12px 0;
-            transition: color 0.2s ease, text-shadow 0.2s ease;
-            line-height: 1.5;
-            font-family: inherit;
-            text-align: center;
-            width: 100%;
-        }
-
-        .lyric-line.active {
-            color: #ffff00; 
-            font-weight: bold;
-            font-family: 'Arial Black', sans-serif;
-            text-shadow: 0 0 10px #00ff00;
-        }
-
-        .showcase-zone {
-            margin: 15px 0;
-            border: 2px solid #ffff00;
-            background: #000000;
-            padding: 12px;
-        }
-        
-        .showcase-title {
-            color: #00ff00;
-            font-family: 'Arial Black', sans-serif;
-            font-weight: bold;
-            font-size: 12px;
-            text-transform: uppercase;
-            border-bottom: 2px dashed #ffff00;
-            padding-bottom: 4px;
-            margin-bottom: 10px;
-            letter-spacing: 0.5px;
-        }
-        
-        .showcase-flex {
-            display: flex;
-            flex-wrap: wrap;
             gap: 10px;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 15px;
         }
-        
-        .showcase-flex:last-child {
-            margin-bottom: 0;
+        .gallery-grid label { display: block; cursor: pointer; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+        .gallery-grid img { width: 100%; height: 90px; object-fit: cover; filter: saturate(0.9); transition: filter 0.2s ease; }
+        .gallery-grid label:hover img { filter: saturate(1.1) brightness(1.05); }
+        @media (max-width: 640px) { .gallery-grid { grid-template-columns: repeat(3, 1fr); } }
+
+        .lightbox {
+            position: fixed; inset: 0;
+            background: rgba(21,22,15,0);
+            z-index: 200;
+            display: flex; align-items: center; justify-content: center;
+            pointer-events: none; opacity: 0;
+            transition: background-color 0.35s ease, opacity 0.35s ease;
         }
-        
-        .showcase-flex img {
-            display: block;
-            max-width: 100%;
-            height: auto;
-            filter: drop-shadow(2px 2px 0px #000);
+        .lightbox .expanded-img {
+            width: 0vw; height: auto; max-height: 82vh;
+            object-fit: contain;
+            border: 1px solid var(--khaki);
+            border-radius: 10px;
+            transition: width 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.15);
         }
+        .lightbox-close { position: absolute; inset: 0; cursor: default; }
+        .lightbox-toggle:checked + .lightbox { opacity: 1; pointer-events: auto; background: rgba(21,22,15,0.92); }
+        .lightbox-toggle:checked + .lightbox .expanded-img { width: 42vw; }
+        @media (max-width: 640px) { .lightbox-toggle:checked + .lightbox .expanded-img { width: 88vw; } }
 
-        @media (max-width: 768px) {
-            body {
-                padding: 15px 10px 110px 10px;
-            }
+        .link-list { list-style: none; margin: 0 0 16px 0; padding: 0; }
+        .link-list li {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 10px 0; border-bottom: 1px solid var(--line);
+            font-size: 14px;
+        }
+        .link-list li:last-child { border-bottom: none; }
+        .link-list li span.mono { font-size: 10px; color: var(--khaki-dim); }
 
-            .container {
-                grid-template-columns: 1fr;
-                gap: 15px;
-                padding: 12px;
-                box-shadow: 6px 6px 0px #00ff00;
-            }
+        .meet-note { margin-top: 14px; font-size: 13.5px; color: var(--khaki-dim); }
 
-            .gallery-grid {
-                grid-template-columns: repeat(3, 1fr);
-                gap: 6px;
-                padding: 8px;
-            }
-
-            .music-pod {
-                left: 10px;
-                right: 10px;
-                bottom: 15px;
-                justify-content: space-between;
-            }
-
-            .lightbox-toggle:checked + .lightbox .expanded-img {
-                width: 85vw;
-            }
-
-            .splash-title {
-                font-size: 32px;
-            }
+        footer {
+            padding-top: 10px;
+            text-align: center;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 10.5px;
+            letter-spacing: 0.09em;
+            text-transform: uppercase;
+            color: var(--khaki-dim);
         }
     </style></head><body>
 
-    <div id="star-container"></div>
-
-    <div id="splash-overlay">
-        <div class="splash-title">luxdarky's cozy space</div>
-        <button id="enter-btn" class="splash-btn">Click to be amazed! (AUDIO WARNING!!!)</button>
-    </div>
-
-    <audio id="bg-track" loop>
-        <source src="music.mp3" type="audio/mpeg">
-    </audio>
-
-    <div class="music-pod">
-        <div class="music-pod-title">˚ʚ♡ɞ˚ MUSIC</div>
-        <button id="play-toggle-btn" class="music-btn">Play</button>
-        <input id="vol-control" class="volume-slider" type="range" min="0" max="1" step="0.05" value="0.4">
-    </div>
-
-    <input type="checkbox" id="pop-brain" class="lightbox-toggle">
-    <div class="lightbox">
-        <label for="pop-brain" class="lightbox-close"></label>
-        <img class="expanded-img" src="images/brainsss.png" alt="cool brain">
-    </div>
-
     <input type="checkbox" id="pop-gal1" class="lightbox-toggle">
-    <div class="lightbox">
-        <label for="pop-gal1" class="lightbox-close"></label>
-        <img class="expanded-img" src="images/white-aesthetic-sky-with-birds-e26askfub6g889bl.jpg" alt="Gallery 1">
-    </div>
-
+    <div class="lightbox"><label for="pop-gal1" class="lightbox-close"></label><img class="expanded-img" src="images/white-aesthetic-sky-with-birds-e26askfub6g889bl.jpg" alt="Gallery 1"></div>
     <input type="checkbox" id="pop-gal2" class="lightbox-toggle">
-    <div class="lightbox">
-        <label for="pop-gal2" class="lightbox-close"></label>
-        <img class="expanded-img" src="images/a2754188671_10.jpg" alt="Gallery 2">
-    </div>
-
+    <div class="lightbox"><label for="pop-gal2" class="lightbox-close"></label><img class="expanded-img" src="images/a2754188671_10.jpg" alt="Gallery 2"></div>
     <input type="checkbox" id="pop-gal3" class="lightbox-toggle">
-    <div class="lightbox">
-        <label for="pop-gal3" class="lightbox-close"></label>
-        <img class="expanded-img" src="images/Screenshot 2026-05-10 230025.png" alt="Gallery 3">
-    </div>
-
+    <div class="lightbox"><label for="pop-gal3" class="lightbox-close"></label><img class="expanded-img" src="images/Screenshot 2026-05-10 230025.png" alt="Gallery 3"></div>
     <input type="checkbox" id="pop-gal4" class="lightbox-toggle">
-    <div class="lightbox">
-        <label for="pop-gal4" class="lightbox-close"></label>
-        <img class="expanded-img" src="images/DSC00223.JPG" alt="Gallery 4">
-    </div>
-
+    <div class="lightbox"><label for="pop-gal4" class="lightbox-close"></label><img class="expanded-img" src="images/DSC00223.JPG" alt="Gallery 4"></div>
     <input type="checkbox" id="pop-gal5" class="lightbox-toggle">
-    <div class="lightbox">
-        <label for="pop-gal5" class="lightbox-close"></label>
-        <img class="expanded-img" src="images/0810090097435.jpg" alt="Gallery 5">
+    <div class="lightbox"><label for="pop-gal5" class="lightbox-close"></label><img class="expanded-img" src="images/0810090097435.jpg" alt="Gallery 5"></div>
+    <input type="checkbox" id="pop-brain" class="lightbox-toggle">
+    <div class="lightbox"><label for="pop-brain" class="lightbox-close"></label><img class="expanded-img" src="images/brainsss.png" alt="brain imaging"></div>
+
+    <div class="banner">
+        <img src="images/white-aesthetic-sky-with-birds-e26askfub6g889bl.jpg" alt="banner">
+    </div>
+    <div class="hero-header">
+        <img class="avatar" src="images/pfp.jpg" alt="luxdarky">
+        <div class="hero-body">
+            <h1 class="hero-name">luxdarky</h1>
+            <div class="hero-sub">Finn · He/they · 16 · German</div>
+            <div class="hero-tagline">mood: Parfois, je rêve de fromage.</div>
+            <span class="status-line"><span class="dot" id="status-dot" style="background: var(--offline);"></span><span id="discord-status">loading status</span></span>
+        </div>
     </div>
 
+    <div class="shell">
 
-    <div class="container">
-        
-        <div class="left-col">
-            <div class="profile-name">luxdarky</div>
-            
-            <div class="profile-pic-container">
-                <img class="profile-pic" src="images/pfp.jpg" alt="luxdarky">
-                <div class="status-text">
-                    <div>Mood: Coding this stupid website</div>
-                    <div id="discord-status" class="status-dot" style="color: #666677;">● LOADING STATUS...</div>
-                </div>
-            </div>
+        <div class="box-grid">
 
             <div class="box">
                 <div class="box-header">Contacting me</div>
                 <div class="box-content">
-                    <p style="margin: 0; line-height: 1.5;">
-                        Add me on my socials to say hello! You can add me directly on Discord via luxdarky or send me a friend request over on <a href="https://www.roblox.com/users/1499630738/profile" target="_blank">Roblox</a>!
-                    </p>
-                </div>
-            </div>
-
-            <div class="box">
-                <div class="box-header">My Blurbs & Interests!!</div>
-                <table class="info-table">
-                    <tr>
-                        <td class="label">General</td>
-                        <td>I am OBSESSED with <img src="images/neurology.gif" alt="Brain Graphic" style="height: 16px; vertical-align: middle; margin: 0 4px;">, it's so cool to research the brain and what it's capable of! 
-                            Fun Fact, The human brain generates up to 70,000 thoughts daily and processes information at speeds of up to 268 miles per hour!</td>
-                    </tr>
-                    <tr>
-                        <td class="label">Music</td>
-                        <td>I listen to a lot of MCR, Pierce The Veil, Mindless Self Indulgence and Stomach Book, but it mostly depends on my mood. I also listen to FEM&M, RomancePlanet, Lil Texas and Slipknot. I also got into whatsaheart recently! :D</td>
-                    </tr>
-                    <tr>
-                        <td class="label">Shows</td>
-                        <td>I usually only watch The Rookie, Dr House, The Good Doctor and Black Mirror, i also LOVE JJBA and JJK c:</td>
-                    </tr>
-                    <tr>
-                        <td class="label">Movies</td>
-                        <td>My Favourite Movies are 28 years later (1 and 2), Smile (also 1 and 2), and all MIB parts. ^^</td>
-                    </tr>
-                    <tr>
-                        <td class="label">Discord</td>
-                        <td>luxdarky</td>
-                    </tr>
-                    <tr>
-                        <td class="label">Roblox</td>
-                        <td><a href="https://www.roblox.com/users/1499630738/profile" target="_blank">luxdarky</a></td>
-                    </tr>
-                </table>
-            </div>
-        </div>
-
-        <div class="right-col">
-            
-            <div class="box">
-                <div class="box-header">🎵 Now Playing 🎵</div>
-                <div class="box-content" style="padding: 16px;">
-                    <div style="font-size: 14px; color: #ffff00; font-family: 'Arial Black', sans-serif; text-shadow: 2px 2px 0 #000; text-align: center; margin-bottom: 8px;">for her - whatsaheart</div>
-                    
-                    <div id="lyrics-wrapper" class="lyrics-viewport"></div>
+                    <p style="margin-bottom: 14px;">hmu whenever!! i answer pretty fast since im unemployed lol, so dont be shy ^^</p>
+                    <ul class="link-list">
+                        <li>Discord <a href="discordapp.com/users/939252688456155177" target="_blank">luxdarky ↗</a></li>
+                        <li>Roblox <a href="https://www.roblox.com/users/1499630738/profile" target="_blank">luxdarky ↗</a></li>
+                    </ul>
                 </div>
             </div>
 
             <div class="box">
                 <div class="box-header">about me!!</div>
-                <div class="box-content blurb-section">
-                    <h3>Bio:</h3>
-                    <p style="margin-top: 4px; margin-bottom: 12px;">Hey guys!! My names Finn, but please just call me Token. I'm 16 years old and currently being homeschooled, so ill probably answer fast over my socials. I use he/they pronouns, but i dont care about which ones u use. ^^</p>
-                    
-                    <div class="showcase-zone">
-                        
-                        <div class="showcase-title">Stamps</div>
-                        <div class="showcase-flex">
-                            <img src="images/b14.gif" alt="I dunno 1">
-                            <img src="images/c2.gif" alt="I dunno 2">
-                            <img src="images/d26.gif" alt="PYRO">
-                            <img src="images/d27.gif" alt="BONK">
-                            <img src="images/d28.png" alt="Anarchy">
-                            <img src="images/d81.png" alt="Geiger Counters">
-                            <img src="images/d113.png" alt="emohair">
-                            <img src="images/e40.gif" alt="redspy">
-                            <img src="images/e43.gif" alt="cutie">
-                            <img src="images/e65.gif" alt="Rawr">
-                            <img src="images/f1.png" alt="undertale">
-                            <img src="images/f2.png" alt="scenehair">
-                            <img src="images/f62.png" alt="lying">
-                            <img src="images/h21.gif" alt="fall">
-                            <img src="images/h3.png" alt="Laptop">
-                            <img src="images/h7.jpg" alt="biohazard">
-                            <img src="images/h4.gif" alt="sharp">
-                            <img src="images/h13.png" alt="waffles">
-                            <img src="images/h16.png" alt="radioactive">
-                            <img src="images/h20.gif" alt="cutie 2">
-                        </div>
+                <div class="box-content">
+                    <p style="margin-bottom: 12px;">Hey guys!! My names Finn, but please just call me Token. I'm 16 years old and currently Unemployed, so ill probably answer fast over my socials. I use he/they pronouns, but i dont care about which ones u use. ^^</p>
+                    <p class="meet-note">Who I'd like to meet: RomancePlanet, Amy J. Gonzalez, and most of all my beloved Vivian (aka STOMACH BOOK)!!!</p>
+                </div>
+            </div>
 
-                        <div class="showcase-title" style="margin-top: 10px;">Blinkies</div>
-                        <div class="showcase-flex">
-                            <img src="images/c11.gif" alt="bad hair">
-                            <img src="images/c15.gif" alt="site in progress">
-                            <img src="images/c56.gif" alt="i dunno 555">
-                            <img src="images/c57.gif" alt="i dunno 67">
-                            <img src="images/c59.gif" alt="angelic">
-                            <img src="images/d28.gif" alt="science">
-                            <img src="images/d95.gif" alt="local loser boy">
-                            <img src="images/a14.gif" alt="postal">
-                            <img src="images/c1.gif" alt="bite me">
-                            <img src="images/c40.gif" alt="bornthisway">
-                            <img src="images/d17.gif" alt="invaderzim">
-                            <img src="images/d38.gif" alt="i dunno 420">
-                            <img src="images/d97.gif" alt="frogs">
-                            <img src="images/h16.gif" alt="mcr">
-                            <img src="images/j2.gif" alt="original">
-                            <img src="images/j9.gif" alt="momcool">
-                            <img src="images/j13.gif" alt="glados<3">
-                            <img src="images/k1.gif" alt="biohazard2">
-                            <img src="images/k8.gif" alt="radioactive">
-                            <img src="images/k9.gif" alt="arewealone?">
-                            <img src="images/k11.gif" alt="monster!!!">
-                            <img src="images/r3.gif" alt="tf2">
-                            <img src="images/x15.gif" alt="radiohead">
-                            <img src="images/z20.gif" alt="depression">
-                        </div>
-
-                        <div class="showcase-title" style="margin-top: 10px;">Buttons</div>
-                        <div class="showcase-flex">
-                            <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank">
-                            <img src="images/a67.gif" alt="funny troll">
-                            </a>
-                            <img src="images/a42.png" alt="transrights">
-                            <img src="images/a81.gif" alt="ai">
-                            <img src="images/b3.jpg" alt="newgrounds">
-                            <img src="images/b7.gif" alt="eat">
-                            <img src="images/b8.gif" alt="newgrounds2">
-                            <img src="images/b9.gif" alt="hl">
-                            <img src="images/d14.gif" alt="blasphemy">
-                            <img src="images/e23.gif" alt="neoncat">
-                            <img src="images/f23.jpg" alt="portal">
-                            <img src="images/k2.gif" alt="scene233">
-                        </div>
-
-                    </div>
-                    <h3>Who I'd like to meet:</h3>
-                    <p style="margin-top: 4px; margin-bottom: 0;">I would love to meet RomancePlanet, Amy J. Gonzalez, and most of all my beloved Vivian (aka STOMACH BOOK)!!!</p>
+            <div class="box box-full">
+                <div class="box-header">My Blurbs & Interests!!</div>
+                <div class="box-content">
+                    <table class="info-table">
+                        <tr>
+                            <td class="label">General</td>
+                            <td>I am OBSESSED with neurology, it's so cool to research the brain and what it's capable of! Fun Fact, The human brain generates up to 70,000 thoughts daily and processes information at speeds of up to 268 miles per hour!</td>
+                        </tr>
+                        <tr>
+                            <td class="label">Music</td>
+                            <td>I listen to a lot of MCR, Pierce The Veil, Deftones and Stomach Book, but it mostly depends on my mood. I also listen to asteria , Lil Texas and Slipknot. I also got into whatsaheart recently! :D</td>
+                        </tr>
+                        <tr>
+                            <td class="label">Shows</td>
+                            <td>I usually only watch The Rookie, Dr House, The Good Doctor and Black Mirror, i also LOVE JJBA, JJK and CSM c:</td>
+                        </tr>
+                        <tr>
+                            <td class="label">Movies</td>
+                            <td>My Favourite Movies are 28 years later (1 and 2), Smile (also 1 and 2), and all MIB parts. ^^</td>
+                        </tr>
+                    </table>
                 </div>
             </div>
 
             <div class="box">
                 <div class="box-header">brainnnn</div>
-                <div style="padding: 15px; display: flex; flex-direction: column; gap: 15px; align-items: center;">
-                
-                    <label for="pop-brain" style="display: block; overflow: hidden; border: 3px solid #00ff00; width: 100%; max-width: 400px; height: auto; cursor: pointer; box-shadow: 5px 5px 0 #ffff00;">
-                        <img src="images/brainsss.png" alt="cool image of an xray" style="width: 100%; height: auto; display: block; object-fit: contain;">
-                    </label>
-                
-                    <div class="brains-info" style="width: 100%;">
-                        <h4 style="color: #ffff00; margin: 0 0 5px 0; font-size: 14px; font-weight: bold; text-transform: uppercase;">The Brain</h4>
-                        <p style="margin: 0; font-size: 12px; line-height: 1.4; color: #ffffff;">
-                            Imaging studies of the patient. A and B. Skull X-ray images showing the intracranial electrodes with the far anterior entry points. C and D. T1-weighted images with contrast for stereotactic planning at the age of 68 years. E and F. T1-weighted images without contrast 5 years after DBS surgery. These MRI images show the atrophic change in the brain over a period of 5 years.  
-                        </p>
+                <div class="box-content">
+                    <div class="brain-flex">
+                        <label for="pop-brain"><img src="images/brainsss.png" alt="brain imaging"></label>
+                        <p>Imaging studies of the patient. A and B. Skull X-ray images showing the intracranial electrodes with the far anterior entry points. C and D. T1-weighted images with contrast for stereotactic planning at the age of 68 years. E and F. T1-weighted images without contrast 5 years after DBS surgery. These MRI images show the atrophic change in the brain over a period of 5 years.</p>
                     </div>
-                </div>
-                <div class="box">
-                    <div class="box-header">my playlist!!</div>
-                    <div class="box-content" style="text-align: center;">
-                        <iframe 
-                            style="border-radius:0px;" 
-                            src="https://open.spotify.com/embed/playlist/5jLaYVNjS6XBMSmBoPb9H8?utm_source=generator&theme=0" 
-                            width="100%" 
-                            height="152" 
-                            frameBorder="0" 
-                            allowfullscreen="" 
-                            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
-                            loading="lazy">
-                        </iframe>
-                    </div>
-                </div>
-            </div>
-
-            <div class="box">
-                <div class="box-header">the gallery</div>
-                <div class="gallery-grid">
-                    <label for="pop-gal1">
-                        <img src="images/white-aesthetic-sky-with-birds-e26askfub6g889bl.jpg" alt="Gallery Image 1">
-                    </label>
-                    <label for="pop-gal2">
-                        <img src="images/a2754188671_10.jpg" alt="Gallery Image 2">
-                    </label>
-                    <label for="pop-gal3">
-                        <img src="images/Screenshot 2026-05-10 230025.png" alt="Gallery Image 3">
-                    </label>
-                    <label for="pop-gal4">
-                        <img src="images/DSC00223.JPG" alt="Gallery Image 4">
-                    </label>
-                    <label for="pop-gal5">
-                        <img src="images/0810090097435.jpg" alt="Gallery Image 5">
-                    </label>
                 </div>
             </div>
 
             <div class="box">
                 <div class="box-header">commentz</div>
-                <div class="box-content" style="text-align: center; color: #00ff00; font-style: italic; padding: 15px; font-weight: bold;">
-                    Still working on implementing this, please be patient! ❤️
+                <div class="box-content" style="text-align: center;">
+                    <p style="color: var(--khaki);">Still working on implementing this, please be patient! ❤️</p>
+                </div>
+            </div>
+
+            <div class="box box-full">
+                <div class="box-header">the gallery</div>
+                <div class="box-content">
+                    <div class="gallery-grid">
+                        <label for="pop-gal1"><img src="images/white-aesthetic-sky-with-birds-e26askfub6g889bl.jpg" alt="Gallery 1"></label>
+                        <label for="pop-gal2"><img src="images/a2754188671_10.jpg" alt="Gallery 2"></label>
+                        <label for="pop-gal3"><img src="images/Screenshot 2026-05-10 230025.png" alt="Gallery 3"></label>
+                        <label for="pop-gal4"><img src="images/DSC00223.JPG" alt="Gallery 4"></label>
+                        <label for="pop-gal5"><img src="images/0810090097435.jpg" alt="Gallery 5"></label>
+                    </div>
                 </div>
             </div>
 
@@ -774,176 +330,24 @@
     </div>
 
     <script>
-        const audioTrack = document.getElementById('bg-track');
-        const playToggleBtn = document.getElementById('play-toggle-btn');
-        const volControl = document.getElementById('vol-control');
-        const splashOverlay = document.getElementById('splash-overlay');
-        const enterBtn = document.getElementById('enter-btn');
-
-        audioTrack.volume = volControl.value;
-
-        audioTrack.addEventListener('play', () => {
-            playToggleBtn.textContent = 'Pause';
-        });
-        audioTrack.addEventListener('pause', () => {
-            playToggleBtn.textContent = 'Play';
-        });
-
-        enterBtn.addEventListener('click', () => {
-            splashOverlay.style.opacity = '0';
-            splashOverlay.style.pointerEvents = 'none';
-
-            audioTrack.play().catch(err => {
-                console.log("Audio play failed on click interaction:", err);
-            });
-        });
-
-        playToggleBtn.addEventListener('click', () => {
-            if (audioTrack.paused) {
-                audioTrack.play();
-            } else {
-                audioTrack.pause();
-            }
-        });
-
-        volControl.addEventListener('input', (e) => {
-            audioTrack.volume = e.target.value;
-        });
-
-        const lyricData = [
-            { time: 0.0, text: "♪"},
-            { time: 23.2, text: "My soul aches for you" },
-            { time: 26.7, text: "You belong with me" },
-            { time: 29.1, text: "Yeah, I was made for you" },
-            { time: 32.1, text: "And you were made for me" },
-            { time: 34.5, text: "Why do you still reject me? (I don't know)" },
-            { time: 40.4, text: "Bae, without me, you're empty (all alone)" },
-            { time: 46.3, text: "You, I'm calling for" },
-            { time: 58.0, text: "Tearing down the walls in my abode" },
-            { time: 63.8, text: "Lying on the floor in a pit of blood" },
-            { time: 69.7, text: "I still don't know if it's love or lust" },
-            { time: 74.9, text: "But I need her" },
-            { time: 81.2, text: "I will do it all for her" },
-            { time: 86.7, text: "Anything she wants me to" },
-            { time: 93.8, text: "My love, return my love or you'll fall down" },
-            { time: 104.5, text: "I'd cut out my heart if it meant that you'd hold it close" },
-            { time: 111.5, text: "(That you'd hold it close)" },
-            { time: 116.0, text: "You, I'm calling for" },
-            { time: 128.4, text: "Tearing down the walls in my abode" },
-            { time: 133.8, text: "Lying on the floor in a pit of blood" },
-            { time: 139.7, text: "I still don't know if it's love or lust" },
-            { time: 145.1, text: "But I need her" },
-            { time: 151.5, text: "I will do it all for her" },
-            { time: 157.1, text: "Anything she wants me to" },
-            { time: 163.4, text: "♪"}
-        ];
-
-        const lyricsWrapper = document.getElementById('lyrics-wrapper');
-
-        lyricData.forEach((line, index) => {
-            const p = document.createElement('p');
-            p.classList.add('lyric-line');
-            p.textContent = line.text;
-            p.setAttribute('id', `lyric-${index}`);
-            lyricsWrapper.appendChild(p);
-        });
-
-        let currentLineTrack = -1;
-
-        audioTrack.addEventListener('timeupdate', () => {
-            const currentTime = audioTrack.currentTime;
-            let activeIndex = -1;
-
-            for (let i = 0; i < lyricData.length; i++) {
-                if (currentTime >= lyricData[i].time) {
-                    activeIndex = i;
-                } else {
-                    break;
-                }
-            }
-
-            if (activeIndex !== -1) {
-                const allLines = document.querySelectorAll('.lyric-line');
-                allLines.forEach(line => line.classList.remove('active'));
-
-                const activeLine = document.getElementById(`lyric-${activeIndex}`);
-                if (activeLine) {
-                    activeLine.classList.add('active');
-                    
-                    if (activeIndex !== currentLineTrack) {
-                        currentLineTrack = activeIndex;
-                        
-                        const containerRect = lyricsWrapper.getBoundingClientRect();
-                        const lineRect = activeLine.getBoundingClientRect();
-                        
-                        const relativeLineTop = lineRect.top - containerRect.top + lyricsWrapper.scrollTop;
-                        
-                        lyricsWrapper.scrollTo({
-                            top: relativeLineTop - (containerRect.height / 2) + (lineRect.height / 2),
-                            behavior: 'smooth'
-                        });
-                    }
-                }
-            }
-        });
-
-        const DISCORD_ID = '939252688456155177'; 
+        const DISCORD_ID = '939252688456155177';
+        const statusColors = { online: 'var(--online)', idle: 'var(--idle)', dnd: 'var(--dnd)', offline: 'var(--offline)' };
+        const statusLabels = { online: 'online', idle: 'idle / afk', dnd: 'do not disturb', offline: 'offline' };
 
         async function fetchDiscordStatus() {
             try {
                 const response = await fetch(`https://api.lanyard.rest/v1/users/${DISCORD_ID}`);
                 const resData = await response.json();
-                
                 if (resData.success && resData.data) {
-                    const statusType = resData.data.discord_status;
-                    const statusElement = document.getElementById('discord-status');
-
-                    if (statusType === 'online') {
-                        statusElement.textContent = '● ONLINE';
-                        statusElement.style.color = '#00ff00';
-                    } else if (statusType === 'idle') {
-                        statusElement.textContent = '● IDLE / AFK';
-                        statusElement.style.color = '#ffff00';
-                    } else if (statusType === 'dnd') {
-                        statusElement.textContent = '● DO NOT DISTURB';
-                        statusElement.style.color = '#ff0055';
-                    } else {
-                        statusElement.textContent = '● OFFLINE';
-                        statusElement.style.color = '#444444';
-                    }
+                    const statusType = resData.data.discord_status in statusLabels ? resData.data.discord_status : 'offline';
+                    document.getElementById('discord-status').textContent = statusLabels[statusType];
+                    document.getElementById('status-dot').style.background = statusColors[statusType];
                 }
             } catch (error) {
                 console.error("Lanyard system query drop error:", error);
-                document.getElementById('discord-status').textContent = '● STATUS ERROR';
+                document.getElementById('discord-status').textContent = 'status unknown';
             }
         }
-
         fetchDiscordStatus();
         setInterval(fetchDiscordStatus, 30000);
-
-        const starContainer = document.getElementById('star-container');
-        const starImageSrc = 'images/star.png';
-
-        function createStar() {
-            const star = document.createElement('img');
-            star.src = starImageSrc;
-            star.classList.add('falling-star');
-            star.style.left = Math.random() * 100 + 'vw';
-            
-            const size = Math.random() * 15 + 10;
-            star.style.width = size + 'px';
-            star.style.height = 'auto';
-            
-            const duration = Math.random() * 4 + 4;
-            star.style.animationDuration = duration + 's';
-            star.style.opacity = Math.random() * 0.5 + 0.5;
-
-            starContainer.appendChild(star);
-
-            setTimeout(() => {
-                star.remove();
-            }, duration * 1000);
-        }
-
-        setInterval(createStar, 300);
     </script></body></html>
