@@ -45,29 +45,42 @@
         .shell { max-width: 760px; margin: 0 auto; padding: 0 24px 80px 24px; }
         @media (max-width: 640px) { .shell { padding: 0 16px 70px 16px; } }
 
+        .hero-box {
+            max-width: 760px;
+            margin: 24px auto 22px auto;
+            border: 1px solid var(--line);
+            background: var(--panel);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 8px 30px rgba(1,17,56,0.18);
+        }
+        @media (max-width: 640px) { .hero-box { margin: 16px 16px 22px 16px; } }
+        
         .banner {
             width: 100%;
             aspect-ratio: 8 / 2;
             overflow: hidden;
             background: #0a1d4d;
         }
-        .banner img { width: 100%; height: 100%; object-fit: cover; filter: saturate(0.85); }
-
-        .hero-header { max-width: 760px; margin: 0 auto; padding: 0 24px; position: relative; }
-        @media (max-width: 640px) { .hero-header { padding: 0 16px; } }
-
+        .banner img { width: 100%; height: 100%; object-fit: cover; object-position: center 78%; filter: saturate(0.9); }
+        
+        .hero-header { padding: 0 24px; position: relative; }
+        @media (max-width: 640px) { .hero-header { padding: 0 18px; } }
+        
         .avatar {
             width: 108px;
             height: 108px;
             border-radius: 50%;
-            border: 5px solid #0a1d4d;
+            border: 5px solid var(--panel);
             object-fit: cover;
-            margin-top: -40px;
+            margin-top: -54px;
             display: block;
-            background: var(--panel);
+            background: #0a1d4d;
         }
-
-        .hero-body { padding: 18px 0 40px 0; }
+        
+        .hero-body { padding: 18px 0 24px 0; }
 
         .hero-name {
             font-family: 'Newsreader', serif;
@@ -224,8 +237,6 @@
         }
     </style></head><body>
 
-    <input type="checkbox" id="pop-gal1" class="lightbox-toggle">
-<div class="lightbox"><label for="pop-gal1" class="lightbox-close"></label><img class="expanded-img" src="images/white-aesthetic-sky-with-birds-e26askfub6g889bl.jpg" alt="Gallery 1"></div>
 <input type="checkbox" id="pop-gal2" class="lightbox-toggle">
 <div class="lightbox"><label for="pop-gal2" class="lightbox-close"></label><img class="expanded-img" src="images/DSC00323.jpg" alt="Gallery 2"></div>
 <input type="checkbox" id="pop-gal3" class="lightbox-toggle">
@@ -241,21 +252,23 @@
 <input type="checkbox" id="pop-brain" class="lightbox-toggle">
 <div class="lightbox"><label for="pop-brain" class="lightbox-close"></label><img class="expanded-img" src="images/brainsss.png" alt="brain imaging"></div>
 
-    <div class="banner">
-        <img src="images/DSC00323.jpg" alt="banner">
-    </div>
-    <div class="hero-header">
-        <img class="avatar" src="images/pfp.jpg" alt="luxdarky">
-        <div class="hero-body">
-            <h1 class="hero-name">luxdarky</h1>
-            <div class="hero-sub">Finn · He/they · 16 · German</div>
-            <div class="hero-tagline">mood: Parfois, je rêve de fromage.</div>
-            <span class="status-line"><span class="dot" id="status-dot" style="background: var(--offline);"></span><span id="discord-status">loading status</span></span>
+       <div class="hero-box">
+        <div class="banner">
+            <img src="images/DSC00323.jpg" alt="banner">
+        </div>
+        <div class="hero-header">
+            <img class="avatar" src="images/pfp.jpg" alt="luxdarky">
+            <div class="hero-body">
+                <h1 class="hero-name">luxdarky</h1>
+                <div class="hero-sub">Finn · He/they · 16 · German</div>
+                <div class="hero-tagline">mood: coding this stupid website lol</div>
+                <span class="status-line"><span class="dot" id="status-dot" style="background: var(--offline);"></span><span id="discord-status">loading status</span></span>
+            </div>
         </div>
     </div>
-
+    
     <div class="shell">
-
+    
         <div class="box-grid">
 
             <div class="box">
@@ -322,7 +335,6 @@
                 <div class="box-header">the gallery</div>
                 <div class="box-content">
                     <div class="gallery-grid">
-                        <label for="pop-gal1"><img src="images/white-aesthetic-sky-with-birds-e26askfub6g889bl.jpg" alt="Gallery 1"></label>
                         <label for="pop-gal2"><img src="images/DSC00323.jpg" alt="Gallery 2"></label>
                         <label for="pop-gal3"><img src="images/DSC00322.jpg" alt="Gallery 3"></label>
                         <label for="pop-gal4"><img src="images/DSC00223.JPG" alt="Gallery 4"></label>
